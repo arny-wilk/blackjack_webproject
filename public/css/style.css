@@ -1,0 +1,208 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
+
+/* root and rebase CSS */
+:root {
+  background-color: rgb(14, 80, 23);  
+  background-image: radial-gradient(circle, green, darkgreen);
+  color: aliceblue;
+  font-size: 62.5%;
+  font-family: "display";
+}
+
+*, ::before, ::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: 1px solid red;
+}
+
+/* Navbar CSS  */
+nav {
+    height: 75px;
+    width: 100%;
+    background-color: rgb(15, 64, 43);
+}
+
+.liste-nav {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+.item-nav {
+    display: inline-block;
+    line-height: 70px;
+    font-size: 25px;
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.item-nav a {
+    text-decoration: none;
+    color:aliceblue;
+}
+
+.btn-toggle-container {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    cursor: pointer;
+    display: none;
+}
+
+.btn-toggle-container img {
+    width: 40px;
+}
+
+/* Rules CSS */
+.section__rules {
+    margin: 2rem;
+    padding: 1rem;
+    font-size: medium;
+}
+
+.article__rules {
+    display: none;
+}
+
+.summary__blackjack_rules {
+    margin: 1rem;
+    padding: 1rem;
+    font-size: 2rem;;
+}
+
+.details_help {
+    margin: 1rem;
+    font-size: small;
+}
+
+.paragraph__rules {
+    margin: 1rem;
+    padding: 1rem;
+    cursor: pointer;
+}
+
+.liste__rules_details {
+    margin: 1rem 1rem auto;
+    width: 100%;
+    height: 100%;
+    list-style-type: none;
+}
+
+.item_rules {
+    margin: 1rem 1rem auto;
+}
+
+.article__rules.active_rules {
+    display: block;
+}
+
+/* Board Game Panel and deck containers */
+.board__panel {
+    margin: 2rem;
+    padding: 1rem;
+    font-size: medium;
+}
+
+.deck__container {
+    margin: 2rem;
+    padding: 1rem;
+}
+
+.deck {
+    margin: 2rem;
+    padding: 1rem;
+}
+
+/* .computer__deck {
+} */
+
+.computer__deck li {
+    margin: 2rem;
+    padding: 1rem;
+    list-style-type: none;
+}
+
+.computer__deck li:nth-last-child(1) {
+    display: none;
+}
+
+.computer__deck li:nth-last-child(1).active_last_card {
+    display: block;
+}
+
+/* .player__deck {
+} */
+
+.player__deck li {
+    margin: 2rem;
+    padding: 1rem;
+    list-style-type: none;
+}
+
+.btn__board {
+    width: 15rem;
+    height: 10rem;
+    margin: 2rem;
+    padding: 1rem;
+    font-size: 3rem;
+    font-weight: bold;
+    color: rgb(57, 57, 57);
+    border: 1px solid whitesmoke;
+    border-color: bisque;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.btn__board.btn__deal {
+    background-color: greenyellow;
+    background-image: radial-gradient(circle, greenyellow, darkgreen);;
+}
+
+.btn__board.btn__hit {
+    background-color: chocolate;
+    background-image: radial-gradient(circle, chocolate, rgb(154, 33, 33));;
+}
+
+.btn__board.btn__stand {
+    background-color: burlywood;
+    background-image: radial-gradient(circle, burlywood, rgb(133, 75, 4));;
+}
+
+.btn__board.btn__restart {
+    background-color: red;
+    background-image: radial-gradient(circle, red, rgb(118, 0, 0));;
+}
+
+.btn__board.btn__test_game {
+    background-color: aqua;
+    background-image: radial-gradient(circle, aqua, blue);;
+}
+
+/* Media screen responsive for max-width 650px */
+@media screen and (max-width: 650px) {
+    .btn-toggle-container {
+        display: block;
+    }
+
+    nav {
+        border-bottom: 1px solid #f1f1f1;
+    }
+
+    .liste-nav {
+        position: relative;
+        top: 70px;
+        display: none;
+    }
+
+    .item-nav {
+        display: block;
+        background-color: rgb(15, 64, 43);
+        margin: 0;
+    }
+
+    .liste-nav.active-menu {
+        display: block;
+    }
+
+}
