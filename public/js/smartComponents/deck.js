@@ -23,7 +23,7 @@ export default class Deck extends Dom {
      *
      * @type {string[]}
      */
-    #VALUES = ["AS", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
+    #VALUES = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
 
     /**
      * @type {Card[]}

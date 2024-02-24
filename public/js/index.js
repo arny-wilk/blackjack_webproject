@@ -5,5 +5,5 @@ const app = new ApplicationContext();
 app.getNavBar();
 app.getRules();
 app.getBoard();
-app.getDeck();
-
+app.startDeal();
+app.resetDeal();

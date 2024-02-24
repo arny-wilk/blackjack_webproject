@@ -27,7 +27,7 @@ export default class BlackJackRules {
      * @returns {number}
      */
     handWithoutAce(hand) {
-        const filteredArray = hand.filter((val) => val.value !== "AS");
+        const filteredArray = hand.filter((val) => val.value !== "A");
         let tempSum = 0;
         for (let ele of filteredArray) {
             ele.value = parseInt(ele.value);
