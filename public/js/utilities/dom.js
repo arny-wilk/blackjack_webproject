@@ -35,12 +35,6 @@ export default class Dom {
   }
 
   /**
-   * Behavioral method toggle
-   * 
-   * the toggle method allows to change the behavior of the
-   * component by adding a new css child selector
-   *
-   * example: .btn-toggle-container.active-menu { .... }
    *
    * @param {string} parentSelector
    * @param {string} childSelector
@@ -53,5 +47,22 @@ export default class Dom {
     btnComponent?.addEventListener("click", function () {
       component?.classList.toggle(appendChildSelector);
     });
+  }
+
+  /**
+   *
+   * @param {string } selector
+   */
+  destroyComponent(selector) {
+    document.querySelector(selector)?.remove();
+  }
+
+
+  /**
+   *
+   * @param {string} selector
+   */
+  destroyAllComponent(selector) {
+    document.querySelectorAll(selector)?.forEach(node=> node.remove);
   }
 }

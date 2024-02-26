@@ -5,5 +5,4 @@ const app = new ApplicationContext();
 app.getNavBar();
 app.getRules();
 app.getBoard();
-app.startDeal();
-app.resetDeal();
+app.startGame();

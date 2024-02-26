@@ -18,32 +18,15 @@ export default class DeckComponentBuilder {
         );
     }
 
+
     /**
      *
-     * @returns {{ deck: Deck; cards: Card[]; computerHand: Object[]; playerHand: Object[]; }}
+     * @param {Deck} deck
+     * @param {Card[]} cards
+     * @param {Object[]} computerHand
+     * @param {Object[]} playerHand
      */
-    initCards() {
-
-        const deck = new Deck();
-
-        deck.shuffle();
-        const cards = deck.getCards();
-        const computerHand = [];
-        const playerHand = [];
-
-        return {
-            deck: deck,
-            cards: cards,
-            computerHand: computerHand,
-            playerHand: playerHand
-        }
-
-    }
-
-    buildDeckComponent() {
-
-        const { deck, cards, computerHand, playerHand } = this.initCards();
-
+    buildDeckComponent(deck, cards, computerHand, playerHand) {
 
         computerHand.push(cards.pop());
         playerHand.push(cards.pop());
@@ -52,40 +35,56 @@ export default class DeckComponentBuilder {
         playerHand.push(cards.pop());
 
 
-        const computer = deck.createComponent("ul", null, document.querySelector(".deck__computer_panel"), [{ "name": "class", "value": "computer__deck deck" }]);
         for (let computerCard of computerHand) {
             const { suit, value } = computerCard;
-            deck.createComponent("li", `${suit}, ${value}`, computer, [{ "name": "class", "value": "computer__card_slot card_slot" }]);
+            setTimeout(() => {
+                deck.createComponent("li", `${suit}, ${value}`, document.querySelector(".computer__deck"), [{ "name": "class", "value": "computer__card_slot card_slot" }]);
+            }, 1000);
         }
 
 
-        const player = deck.createComponent("ul", null, document.querySelector(".deck__player_panel"), [{ "name": "class", "value": "player__deck deck" }]);
         for (let playerCard of playerHand) {
             const { suit, value } = playerCard;
-            deck.createComponent("li", `${suit}, ${value}`, player, [{ "name": "class", "value": "player__card_slot card_slot" }]);
+            setTimeout(() => {
+                deck.createComponent("li", `${suit}, ${value}`, document.querySelector(".player__deck"), [{ "name": "class", "value": "player__card_slot card_slot" }]);
+            }, 1000);
         }
 
-        Play.prototype.execRules(computerHand, playerHand);
 
-        return deck;
+        return { deck: deck, cards: cards, computerHand: computerHand, playerHand: playerHand };
+
     }
 
-    destroyDeck() {
-
-        const { deck, computerHand, playerHand } = this.initCards();
-
-        console.log(`test destroy deck here: `);
-        if (deck !== undefined) {
-            document.querySelector(".computer__deck")?.remove()
-            document.querySelector(".player__deck")?.remove()
-            document.querySelectorAll(".card_slot")?.forEach(item => item.remove());
-        }
-
-        if (computerHand.length > 0 && playerHand.length > 0) {
-            computerHand.splice(computerHand.length - 1);
-            playerHand.splice(playerHand.length - 1);
-        }
+    hitAction() {
     }
 
+    standAction() {
+    }
+
+
+    /**
+     * @param {Deck} deck
+     * @param {Card[]} cards
+     * @param {Object[]} computerHand
+     * @param {Object[]} playerHand
+     */
+    destroyDeck(deck, cards, computerHand, playerHand) {
+        
+        while (computerHand.length > 0 && playerHand.length > 0) {
+            cards.push(computerHand.pop());
+            cards.push(playerHand.pop());
+        }
+        
+        while(document.querySelectorAll(".card_slot").length > 0) {
+            deck.destroyComponent(".computer__card_slot");
+            deck.destroyComponent(".player__card_slot");
+        }
+        // document.querySelector(".computer__deck")?.remove()
+        // document.querySelector(".player__deck")?.remove()
+
+
+
+        return { cards: cards, computerHand: computerHand, playerHand: playerHand };
+    }
 
 }

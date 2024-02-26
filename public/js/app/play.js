@@ -1,6 +1,9 @@
 //@ts-check
 
+import Board from "../dumpComponents/board.js";
+import Card from "../dumpComponents/card.js";
 import BlackJackRules from "../smartComponents/blackJackRules.js";
+import Deck from "../smartComponents/deck.js";
 import DeckComponentBuilder from "./componentBuilder/deckComponentBuilder.js";
 
 /**
@@ -20,33 +23,76 @@ export default class Play {
     /**
      *
      * @param {*} btnDeal
-     * @returns {*}
+     * @param {Deck} deck
+     * @param {Card[]} cards
+     * @param {Object[]} computerHand
+     * @param {Object[]} playerHand
      */
-    deal(btnDeal) {
-        // btnDeal?.addEventListener('click', () => {
-        // });
-        btnDeal?.addEventListener('click', () => {
-            DeckComponentBuilder.prototype.initCards();
-            DeckComponentBuilder.prototype.destroyDeck();
-            DeckComponentBuilder.prototype.buildDeckComponent();
-            console.log(`Event fired once, no more click will be handler`);
-        });
+    deal(btnDeal, deck, cards, computerHand, playerHand) {
+
+        function proceedDeal() {
+            DeckComponentBuilder.prototype.destroyDeck(deck, cards, computerHand, playerHand);
+            DeckComponentBuilder.prototype.buildDeckComponent(deck, cards, computerHand, playerHand)
+        }
+
+        btnDeal?.addEventListener('click', proceedDeal);
+
+        // return { deck: deck, cards: cards, computerHand: computerHand, playerHand: playerHand };
+
     };
 
     /**
      *
-     * @param {*} btnReset
+     * @param {Board} board
      */
-    reset(btnReset) {
-        btnReset?.addEventListener('click', () => {
-            DeckComponentBuilder.prototype.destroyDeck();
-        });
+    testBtn(board) {
+        board.toggle(".computer__deck li:nth-last-child(1)", ".btn__test_game", "active_last_card");
     }
+
+    /**
+     *
+     * @param {*} btnReset
+     * @param {Deck} deck
+     * @param {Card[]} cards
+     * @param {Object[]} computerHand
+     * @param {Object[]} playerHand
+     */
+    reset(btnReset, deck, cards, computerHand, playerHand) {
+        function proceedReste() {
+            return DeckComponentBuilder.prototype.destroyDeck(deck, cards, computerHand, playerHand)
+        }
+        btnReset?.addEventListener('click', proceedReste);
+
+        // return { cards: cards, computerHand: computerHand, playerHand: playerHand };
+    }
+
+    /**
+     *
+     * @param {*} btnHit
+     * @param {Deck} deck
+     * @param {Card[]} cards
+     * @param {Object[]} computerHand
+     * @param {Object[]} playerHand
+     */
+    hit(btnHit, deck, cards, computerHand, playerHand) {
+        function proceedhit() {
+            playerHand.push(cards.pop());
+            const { suit, value } = playerHand[playerHand.length - 1];
+            Play.prototype.execRules(computerHand, playerHand);
+            return deck.createComponent('li', `${suit}, ${value}`, document.querySelector(".player__deck"), [{ "name": "class", "value": "player__card_slot card_slot" }]);
+        }
+        btnHit?.addEventListener('click', proceedhit);
+
+        // return { deck: deck, cards: cards, computerHand: computerHand, playerHand: playerHand };
+    }
+
+    stand() { }
 
     /**
      *
      * @param {Object[]} computerHand
      * @param {Object[]} playerHand
+     * @returns {*}
      */
     execRules(computerHand, playerHand) {
 
@@ -55,10 +101,7 @@ export default class Play {
             if (val.value === "A") {
                 val.value = BlackJackRules.prototype.aceRule(BlackJackRules.prototype.handWithoutAce(computerHand));
             }
-            return val;
         });
-
-        console.log(`Computer Hand: `, computerHand);
 
 
         const computerHandArrayValue = [];
@@ -66,31 +109,31 @@ export default class Play {
             computerHandArrayValue.push(parseInt(val.value, 10));
         })
 
-        console.log(`Computer Hand sum :`, computerHandArrayValue.reduce((acc, val) => acc + val));
-
 
         playerHand.forEach(val => {
             val.value = BlackJackRules.prototype.setLogsRules(val.value)
             if (val.value === "A") {
                 val.value = BlackJackRules.prototype.aceRule(BlackJackRules.prototype.handWithoutAce(playerHand));
             }
-            return val;
         });
-
-        console.log(`Player Hand :`, playerHand);
 
         const playerHandArrayValue = [];
         playerHand.forEach(val => {
             playerHandArrayValue.push(parseInt(val.value, 10));
         })
 
-        console.log(`Player Hand Sum :`, playerHandArrayValue.reduce((acc, val) => acc + val));
+        console.log("array of cards values : ", computerHandArrayValue);
+        console.log("array of cards values : ", playerHandArrayValue);
 
+        let playerHandSum = 0;
+        let computerHandSum = 0;
+
+        if (playerHandArrayValue.length > 0 && computerHandArrayValue.length > 0) {
+            playerHandArrayValue.reduce((acc, curr) => acc + curr, playerHandSum);
+            computerHandArrayValue.reduce((acc, curr) => acc + curr, computerHandSum);
+        }
+
+        return { computerHandSum: computerHandSum, playerHandSum: playerHandSum }
     }
-
-    hit() { }
-
-    stand() { }
-
 
 }
