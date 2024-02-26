@@ -1,8 +1,8 @@
 //@ts-check
 
 import Card from "../../dumpComponents/card.js";
+import Hand from "../../dumpComponents/hand.js";
 import Deck from "../../smartComponents/deck.js";
-import Play from "../play.js";
 
 /**
  *
@@ -23,57 +23,65 @@ export default class DeckComponentBuilder {
      *
      * @param {Deck} deck
      * @param {Card[]} cards
-     * @param {Object[]} computerHand
-     * @param {Object[]} playerHand
+     * @param {Hand[]} computerHand
+     * @param {Hand[]} playerHand
      */
     buildDeckComponent(deck, cards, computerHand, playerHand) {
 
-        computerHand.push(cards.pop());
-        playerHand.push(cards.pop());
+        let cardCompFirst = cards.pop();
+        if(cardCompFirst !== undefined) {
+            computerHand.push(cardCompFirst);
+        }
+        let cardCompSecond = cards.pop();
+        if(cardCompSecond !== undefined) {
+            computerHand.push(cardCompSecond);
+        }
 
-        computerHand.push(cards.pop());
-        playerHand.push(cards.pop());
+        let cardPlayerFirst = cards.pop();
+        if(cardPlayerFirst !== undefined) {
+            playerHand.push(cardPlayerFirst);
+        }
+        let cardPlayerSecond = cards.pop();
+        if(cardPlayerSecond !== undefined) {
+            playerHand.push(cardPlayerSecond);
 
+        }
+        console.log(`Hand computer: `, computerHand);
+        console.log(`hand Player: `, playerHand);
 
         for (let computerCard of computerHand) {
             const { suit, value } = computerCard;
-            setTimeout(() => {
-                deck.createComponent("li", `${suit}, ${value}`, document.querySelector(".computer__deck"), [{ "name": "class", "value": "computer__card_slot card_slot" }]);
-            }, 1000);
+            deck.createComponent("li", `${suit}, ${value}`, document.querySelector(".computer__deck"), [{ "name": "class", "value": "computer__card_slot card_slot" }]);
         }
 
 
         for (let playerCard of playerHand) {
             const { suit, value } = playerCard;
-            setTimeout(() => {
-                deck.createComponent("li", `${suit}, ${value}`, document.querySelector(".player__deck"), [{ "name": "class", "value": "player__card_slot card_slot" }]);
-            }, 1000);
+            deck.createComponent("li", `${suit}, ${value}`, document.querySelector(".player__deck"), [{ "name": "class", "value": "player__card_slot card_slot" }]);
         }
 
-
     }
-
-    hitAction() {
-    }
-
-    standAction() {
-    }
-
 
     /**
      * @param {Deck} deck
      * @param {Card[]} cards
-     * @param {Object[]} computerHand
-     * @param {Object[]} playerHand
+     * @param {Hand[]} computerHand
+     * @param {Hand[]} playerHand
      */
     destroyDeck(deck, cards, computerHand, playerHand) {
 
         while (computerHand.length > 0) {
-            cards.push(computerHand.pop());
+            let cardComp = computerHand.pop();
+            if(cardComp !== undefined) {
+                cards.push(cardComp);
+            }
         }
-        
-        while(playerHand.length > 0) {
-            cards.push(playerHand.pop());
+
+        while (playerHand.length > 0) {
+            let cardPlayer = playerHand.pop();
+            if(cardPlayer !== undefined) {
+                cards.push(cardPlayer);
+            }
         }
 
         while (document.querySelectorAll(".computer__card_slot").length > 0) {

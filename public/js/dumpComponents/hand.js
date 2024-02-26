@@ -3,10 +3,10 @@
 /**
  *
  * @export
- * @class Card
- * @typedef {Card} Readable
+ * @class Hand
+ * @typedef {Hand} Readable
  */
-export default class Card {
+export default class Hand {
 
     /**
      *

@@ -1,5 +1,7 @@
 //@ts-check
 
+import Hand from "../dumpComponents/hand.js";
+
 export default class BlackJackRules {
 
     constructor() {
@@ -10,28 +12,30 @@ export default class BlackJackRules {
 
     /**
      *
-     * @param {string} value
+     * @param {Hand} obj
      * @returns {string}
      */
-    setLogsRules(value) {
+    setLogsRules(obj) {
         const logs = ["J", "Q", "K"];
-        if (logs.includes(value)) {
-            return "10";
+        for (let index = 0; index < logs.length; index++) {
+            if(logs[index] === obj.value) {
+                return "10"
+            }
         }
-        return value;
+        return obj.value.toString();
     }
 
     /**
      *
-     * @param {Object[]} hand
+     * @param {Hand[]} hand
      * @returns {number}
      */
     handWithoutAce(hand) {
         const filteredArray = hand.filter((val) => val.value !== "A");
         let tempSum = 0;
         for (let ele of filteredArray) {
-            ele.value = parseInt(ele.value);
-            tempSum += ele.value;
+            let intVal = parseInt(ele.value.toString());
+            tempSum += intVal;
         }
         return tempSum;
     }
@@ -39,14 +43,13 @@ export default class BlackJackRules {
     /**
      *
      * @param {number} handSum
-     * @returns {*}
+     * @returns {string}
      */
     aceRule(handSum) {
         if (handSum + 11 < 21) {
             return "11";
-        } else if (handSum + 11 > 21) {
-            return "1";
-        }
+        } 
+        return "1";
     }
 
     /**
@@ -56,7 +59,25 @@ export default class BlackJackRules {
      * @returns {boolean}
      */
     loose(playerHandSum, computerHandSum) {
-        return playerHandSum < computerHandSum || playerHandSum > 21 || computerHandSum <= 21;
+        return playerHandSum < computerHandSum || computerHandSum <= 21 || playerHandSum > 21;
+    }
+
+    /**
+     *
+     * @param {number} computerHandSum
+     * @returns {boolean}
+     */
+    looseByBlackJack(computerHandSum) {
+        return computerHandSum == 21;
+    }
+
+    /**
+     *
+     * @param {number} playerHandSum
+     * @returns {boolean}
+     */
+    winByBlackJack(playerHandSum) {
+        return playerHandSum == 21;
     }
 
     /**
@@ -66,7 +87,7 @@ export default class BlackJackRules {
      * @returns {boolean}
      */
     win(playerHandSum, computerHandSum) {
-        return playerHandSum > computerHandSum || playerHandSum <= 21 && computerHandSum > 21;
+        return playerHandSum > computerHandSum || playerHandSum <= 21 || computerHandSum > 21;
     }
 
     /**
@@ -77,6 +98,46 @@ export default class BlackJackRules {
      */
     tie(playerHandSum, computerHandSum) {
         return playerHandSum == computerHandSum;
+    }
+
+    /**
+     *
+     * @param {Hand[]} computerHand
+     * @param {Hand[]} playerHand
+     * @returns {{computerHandSum: number, playerHandSum: number}}
+     */
+    execRules(computerHand, playerHand) {
+
+        computerHand.forEach(obj => {
+            obj.value
+            obj.value = BlackJackRules.prototype.setLogsRules(obj)
+            if (obj.value === "A") {
+                obj.value = BlackJackRules.prototype.aceRule(BlackJackRules.prototype.handWithoutAce(computerHand));
+            }
+        });
+
+        const computerHandArrayValue = [];
+        computerHand.forEach(obj => {
+            computerHandArrayValue.push(parseInt(obj.value.toString(), 10));
+        })
+
+        playerHand.forEach(obj => {
+            obj.value = BlackJackRules.prototype.setLogsRules(obj)
+            if (obj.value === "A") {
+                obj.value = BlackJackRules.prototype.aceRule(BlackJackRules.prototype.handWithoutAce(playerHand));
+            }
+        });
+
+        const playerHandArrayValue = [];
+        playerHand.forEach(obj => {
+            playerHandArrayValue.push(parseInt(obj.value.toString(), 10));
+        })
+
+        const playerHandSum = playerHandArrayValue.reduce((acc, curr) => acc + curr);
+        const computerHandSum = computerHandArrayValue.reduce((acc, curr) => acc + curr);
+
+
+        return { computerHandSum: computerHandSum, playerHandSum: playerHandSum }
     }
 
 }

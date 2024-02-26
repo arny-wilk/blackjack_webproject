@@ -1,12 +1,11 @@
 //@ts-check
 
+import Hand from "../dumpComponents/hand.js";
+import Deck from "../smartComponents/deck.js";
+import BoardComponentBuilder from "./componentBuilder/boardComponentBuilder.js";
 import NavBarComponentBuilder from "./componentBuilder/navbarComponentBuilder.js";
 import RulesComponentBuilder from "./componentBuilder/rulesComponentBuilder.js";
-import BoardComponentBuilder from "./componentBuilder/boardComponentBuilder.js"
 import Play from "./play.js";
-import Deck from "../smartComponents/deck.js";
-import Card from "../dumpComponents/card.js";
-import BlackJackRules from "../smartComponents/blackJackRules.js";
 
 export default class ApplicationContext {
 
@@ -16,6 +15,7 @@ export default class ApplicationContext {
     #btnDeal
     #btnReset
     #btnHit
+    #btnStand
 
     /**
      *
@@ -27,13 +27,13 @@ export default class ApplicationContext {
 
     /**
      *
-     * @type {Object[]} computerHand
+     * @type {Hand[]} computerHand
      */
     #computerHand;
 
     /**
      *
-     * @type {Object[]} playerHand
+     * @type {Hand[]} playerHand
      */
     #playerHand;
 
@@ -49,6 +49,7 @@ export default class ApplicationContext {
         this.#btnDeal = document.querySelector(".btn__deal");
         this.#btnReset = document.querySelector(".btn__reset");
         this.#btnHit = document.querySelector(".btn__hit");
+        this.#btnStand = document.querySelector(".btn__stand");
     }
 
     getNavBar() {
@@ -68,7 +69,10 @@ export default class ApplicationContext {
         Play.prototype.testBtn(this.#board);
 
         Play.prototype.deal(this.#btnDeal, this.#deck, this.#cards, this.#computerHand, this.#playerHand);
+
         Play.prototype.hit(this.#btnHit, this.#deck, this.#cards, this.#computerHand, this.#playerHand);
+
+        Play.prototype.stand(this.#btnStand, this.#deck, this.#cards, this.#computerHand, this.#playerHand);
 
     }
 
