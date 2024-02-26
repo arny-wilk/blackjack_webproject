@@ -33,6 +33,7 @@ export default class Play {
         function proceedDeal() {
             DeckComponentBuilder.prototype.destroyDeck(deck, cards, computerHand, playerHand);
             DeckComponentBuilder.prototype.buildDeckComponent(deck, cards, computerHand, playerHand)
+            Play.prototype.execRules(computerHand, playerHand);
         }
 
         btnDeal?.addEventListener('click', proceedDeal);
@@ -58,10 +59,10 @@ export default class Play {
      * @param {Object[]} playerHand
      */
     reset(btnReset, deck, cards, computerHand, playerHand) {
-        function proceedReste() {
+        function proceedReset() {
             return DeckComponentBuilder.prototype.destroyDeck(deck, cards, computerHand, playerHand)
         }
-        btnReset?.addEventListener('click', proceedReste);
+        btnReset?.addEventListener('click', proceedReset);
 
         // return { cards: cards, computerHand: computerHand, playerHand: playerHand };
     }
@@ -78,8 +79,8 @@ export default class Play {
         function proceedhit() {
             playerHand.push(cards.pop());
             const { suit, value } = playerHand[playerHand.length - 1];
+            deck.createComponent('li', `${suit}, ${value}`, document.querySelector(".player__deck"), [{ "name": "class", "value": "player__card_slot card_slot" }]);
             Play.prototype.execRules(computerHand, playerHand);
-            return deck.createComponent('li', `${suit}, ${value}`, document.querySelector(".player__deck"), [{ "name": "class", "value": "player__card_slot card_slot" }]);
         }
         btnHit?.addEventListener('click', proceedhit);
 

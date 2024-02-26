@@ -51,8 +51,6 @@ export default class DeckComponentBuilder {
         }
 
 
-        return { deck: deck, cards: cards, computerHand: computerHand, playerHand: playerHand };
-
     }
 
     hitAction() {
@@ -69,22 +67,25 @@ export default class DeckComponentBuilder {
      * @param {Object[]} playerHand
      */
     destroyDeck(deck, cards, computerHand, playerHand) {
-        
-        while (computerHand.length > 0 && playerHand.length > 0) {
+
+        while (computerHand.length > 0) {
             cards.push(computerHand.pop());
+        }
+        
+        while(playerHand.length > 0) {
             cards.push(playerHand.pop());
         }
-        
-        while(document.querySelectorAll(".card_slot").length > 0) {
+
+        while (document.querySelectorAll(".computer__card_slot").length > 0) {
             deck.destroyComponent(".computer__card_slot");
+        }
+
+        while (document.querySelectorAll(".player__card_slot").length > 0) {
             deck.destroyComponent(".player__card_slot");
         }
-        // document.querySelector(".computer__deck")?.remove()
-        // document.querySelector(".player__deck")?.remove()
 
+        deck.shuffle();
 
-
-        return { cards: cards, computerHand: computerHand, playerHand: playerHand };
     }
 
 }

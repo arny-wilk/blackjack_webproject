@@ -6,3 +6,4 @@ app.getNavBar();
 app.getRules();
 app.getBoard();
 app.startGame();
+app.resetGame();

@@ -64,33 +64,16 @@ export default class ApplicationContext {
     }
 
     startGame() {
-        
-        Play.prototype.deal(this.#btnDeal, this.#deck, this.#cards, this.#computerHand, this.#playerHand);
+
         Play.prototype.testBtn(this.#board);
-        
-        while (true) {
-            Play.prototype.hit(this.#btnHit, this.#deck, this.#cards, this.#computerHand, this.#playerHand);
 
-            
-            let {computerHandSum, playerHandSum} = Play.prototype.execRules(this.#computerHand, this.#playerHand);
-            
-            if(BlackJackRules.prototype.win(playerHandSum, computerHandSum)) {
-                console.log(`its a win`);
-                break;
-            }
-            if(BlackJackRules.prototype.loose(playerHandSum, computerHandSum)) {
-                console.log(`its a loose`);
-                break;
-            }
-            if(BlackJackRules.prototype.tie(playerHandSum, computerHandSum)) {
-                console.log(`its a tie`);
-                break;
-            }
-        }
+        Play.prototype.deal(this.#btnDeal, this.#deck, this.#cards, this.#computerHand, this.#playerHand);
+        Play.prototype.hit(this.#btnHit, this.#deck, this.#cards, this.#computerHand, this.#playerHand);
 
+    }
+
+    resetGame() {
         Play.prototype.reset(this.#btnReset, this.#deck, this.#cards, this.#computerHand, this.#playerHand);
-        
-        
     }
 
 }
