@@ -37,7 +37,11 @@ export default class Play {
             // }
             DeckComponentBuilder.prototype.buildDeckComponent(deck, cards, computerHand, playerHand)
 
-            const { computerHandSum, playerHandSum } = BlackJackRules.prototype.execRules(computerHand, playerHand);
+            const computerHandSum = BlackJackRules.prototype.execRules(computerHand);
+            const playerHandSum = BlackJackRules.prototype.execRules(playerHand);
+
+            console.log(`computerHandSum: `, computerHandSum);
+            console.log(`playerHandSum: `, playerHandSum);
 
             if (BlackJackRules.prototype.winByBlackJack(playerHandSum)) {
                 console.log(`its a BlackJack you won :`, playerHandSum);
@@ -52,6 +56,129 @@ export default class Play {
 
 
     };
+
+    /**
+     *
+     * @param {*} btnHit
+     * @param {Deck} deck
+     * @param {Card[]} cards
+     * @param {Hand[]} computerHand
+     * @param {Hand[]} playerHand
+     */
+    hit(btnHit, deck, cards, computerHand, playerHand) {
+        function proceedhit() {
+            let card = cards.pop();
+            if (card !== undefined) {
+                playerHand.push(card);
+            }
+            const { suit, value } = playerHand[playerHand.length - 1];
+            deck.createComponent('li', `${suit}, ${value}`, document.querySelector(".player__deck"), [{ "name": "class", "value": "player__card_slot card_slot" }]);
+
+            const computerHandSum = BlackJackRules.prototype.execRules(computerHand);
+            const playerHandSum = BlackJackRules.prototype.execRules(playerHand);
+
+            console.log(`computerHandSum `, computerHandSum);
+            console.log(`playerHandSum `, playerHandSum);
+
+            if (BlackJackRules.prototype.looseByJump(playerHandSum)) {
+                console.log(`You jumped its a loose :`, playerHandSum);
+            }
+
+            if (BlackJackRules.prototype.winByBlackJack(playerHandSum)) {
+                console.log(`BlackJack its a win :`, playerHandSum);
+            }
+
+            // if (BlackJackRules.prototype.loose(playerHandSum, computerHandSum)) {
+            //     console.log(`its a loose :`, playerHandSum);
+            // }
+
+        }
+        btnHit?.addEventListener('click', proceedhit);
+
+    }
+
+    /**
+     *
+     * @param {*} btnStand
+     * @param {Deck} deck
+     * @param {Card[]} cards
+     * @param {Hand[]} computerHand
+     * @param {Hand[]} playerHand
+     */
+    stand(btnStand, deck, cards, computerHand, playerHand) {
+
+        function proceedStand() {
+
+            let sumComp = BlackJackRules.prototype.execRules(computerHand);
+            let sumPlayer = BlackJackRules.prototype.execRules(playerHand);
+            console.log(`computerHandSum: `, sumComp);
+            console.log(`playerHandSum: `, sumPlayer);
+
+            let card = cards.pop();
+            if (card !== undefined) {
+                computerHand.push(card);
+            }
+            const { suit, value } = computerHand[computerHand.length - 1];
+            deck.createComponent('li', `${suit}, ${value}`, document.querySelector(".computer__deck"), [{ "name": "class", "value": "computer__card_slot card_slot" }]);
+
+            sumComp = BlackJackRules.prototype.execRules(computerHand);
+            sumPlayer = BlackJackRules.prototype.execRules(playerHand);
+
+            console.log(`computerHandSum: `, sumComp);
+            console.log(`playerHandSum: `, sumPlayer);
+
+            while (true) {
+
+                if (BlackJackRules.prototype.looseByBlackJack(sumComp)) {
+                    console.log(`BlackJack, its a loose`, sumComp);
+                    break;
+                }
+
+                if (BlackJackRules.prototype.winByComputerJump(sumComp)) {
+                    console.log(`computer Jumped its a win`, sumComp);
+                    break;
+                }
+
+                if (BlackJackRules.prototype.loose(sumComp, sumPlayer)) {
+                    console.log(`its a loose`, sumPlayer + ' < ' + sumComp);
+                    break;
+                }
+
+                if (BlackJackRules.prototype.tie(sumPlayer, sumComp)) {
+                    console.log(`its a tie:`, sumPlayer, sumComp);
+                    break;
+                }
+
+                if (BlackJackRules.prototype.win(sumComp, sumPlayer)) {
+                    console.log(`its a win`, sumPlayer + ' > ' + sumComp);
+                    break;
+                }
+
+            }
+
+
+            // while (!BlackJackRules.prototype.winByComputerJump(computerHandSum)) {
+            //     let { computerHandSum, playerHandSum } = BlackJackRules.prototype.execRules(computerHand, playerHand);
+            //     if (BlackJackRules.prototype.looseByBlackJack(computerHandSum)) {
+            //         console.log(`Blackjack its a loose:`, computerHandSum);
+            //         break;
+            //     }
+
+            //     if (BlackJackRules.prototype.win(playerHandSum, computerHandSum)) {
+            //         console.log(`its a win`, playerHandSum + ' > ' + computerHandSum);
+            //         break;
+            //     }
+
+            //     if (BlackJackRules.prototype.loose(playerHandSum, computerHandSum)) {
+            //         console.log(`its a loose :`, playerHandSum);
+            //         break;
+            //     }
+            // }
+        }
+
+        btnStand?.addEventListener('click', proceedStand);
+
+    }
 
     /**
      *
@@ -76,91 +203,5 @@ export default class Play {
         btnReset?.addEventListener('click', proceedReset);
     }
 
-    /**
-     *
-     * @param {*} btnHit
-     * @param {Deck} deck
-     * @param {Card[]} cards
-     * @param {Hand[]} computerHand
-     * @param {Hand[]} playerHand
-     */
-    hit(btnHit, deck, cards, computerHand, playerHand) {
-        function proceedhit() {
-            let card = cards.pop();
-            if (card !== undefined) {
-                playerHand.push(card);
-            }
-            const { suit, value } = playerHand[playerHand.length - 1];
-            deck.createComponent('li', `${suit}, ${value}`, document.querySelector(".player__deck"), [{ "name": "class", "value": "player__card_slot card_slot" }]);
-
-            const { computerHandSum, playerHandSum } = BlackJackRules.prototype.execRules(computerHand, playerHand);
-
-            console.log(`computerHandSum `, computerHandSum);
-            console.log(`playerHandSum `, playerHandSum);
-
-            if (BlackJackRules.prototype.winByBlackJack(playerHandSum)) {
-                console.log(`its a win :`, playerHandSum);
-            }
-
-            if (BlackJackRules.prototype.loose(playerHandSum, computerHandSum)) {
-                console.log(`its a loose :`, playerHandSum);
-            }
-
-        }
-        btnHit?.addEventListener('click', proceedhit);
-
-    }
-
-    /**
-     *
-     * @param {*} btnStand
-     * @param {Deck} deck
-     * @param {Card[]} cards
-     * @param {Hand[]} computerHand
-     * @param {Hand[]} playerHand
-     */
-    stand(btnStand, deck, cards, computerHand, playerHand) {
-
-        function proceedStand() {
-
-            let { computerHandSum, playerHandSum } = BlackJackRules.prototype.execRules(computerHand, playerHand);
-
-            console.log(`computerHandSum: `, computerHandSum);
-            console.log(`playerHandSum: `, playerHandSum);
-
-            while (true) {
-
-                console.log(`hello do you work loop ?`);
-
-                let card = cards.pop();
-                if (card !== undefined) {
-                    computerHand.push(card);
-                }
-                const { suit, value } = computerHand[computerHand.length - 1];
-                deck.createComponent('li', `${suit}, ${value}`, document.querySelector(".computer__deck"), [{ "name": "class", "value": "computer__card_slot card_slot" }]);
-
-                if (BlackJackRules.prototype.tie(playerHandSum, computerHandSum)) {
-                    console.log(`its a tie:`, playerHandSum, computerHandSum);
-                    break;
-                }
-
-                if (BlackJackRules.prototype.loose(playerHandSum, computerHandSum)) {
-                    console.log(`its a loose :`, playerHandSum);
-                    break;
-                }
-
-
-                if (BlackJackRules.prototype.win(playerHandSum, computerHandSum)) {
-                    console.log(`its a win :`, playerHandSum);
-                    break
-                }
-
-            }
-
-        }
-
-        btnStand?.addEventListener('click', proceedStand);
-
-    }
 
 }

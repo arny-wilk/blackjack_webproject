@@ -18,7 +18,7 @@ export default class BlackJackRules {
     setLogsRules(obj) {
         const logs = ["J", "Q", "K"];
         for (let index = 0; index < logs.length; index++) {
-            if(logs[index] === obj.value) {
+            if (logs[index] === obj.value) {
                 return "10"
             }
         }
@@ -46,9 +46,9 @@ export default class BlackJackRules {
      * @returns {string}
      */
     aceRule(handSum) {
-        if (handSum + 11 < 21) {
+        if (handSum + 11 <= 21) {
             return "11";
-        } 
+        }
         return "1";
     }
 
@@ -59,7 +59,16 @@ export default class BlackJackRules {
      * @returns {boolean}
      */
     loose(playerHandSum, computerHandSum) {
-        return playerHandSum < computerHandSum || computerHandSum <= 21 || playerHandSum > 21;
+        return playerHandSum < computerHandSum;
+    }
+
+    /**
+     *
+     * @param {number} playerHandSum
+     * @returns {boolean}
+     */
+    looseByJump(playerHandSum) {
+        return playerHandSum > 21;
     }
 
     /**
@@ -82,12 +91,21 @@ export default class BlackJackRules {
 
     /**
      *
+     * @param {number} computerHandSum
+     * @returns {boolean}
+     */
+    winByComputerJump(computerHandSum) {
+        return computerHandSum > 21;
+    }
+
+    /**
+     *
      * @param {number} playerHandSum
      * @param {number} computerHandSum
      * @returns {boolean}
      */
     win(playerHandSum, computerHandSum) {
-        return playerHandSum > computerHandSum || playerHandSum <= 21 || computerHandSum > 21;
+        return playerHandSum > computerHandSum;
     }
 
     /**
@@ -102,42 +120,26 @@ export default class BlackJackRules {
 
     /**
      *
-     * @param {Hand[]} computerHand
-     * @param {Hand[]} playerHand
-     * @returns {{computerHandSum: number, playerHandSum: number}}
+     * @param {Hand[]}hand 
+     * @returns {number}}
      */
-    execRules(computerHand, playerHand) {
+    execRules(hand) {
 
-        computerHand.forEach(obj => {
+        hand.forEach(obj => {
             obj.value
             obj.value = BlackJackRules.prototype.setLogsRules(obj)
             if (obj.value === "A") {
-                obj.value = BlackJackRules.prototype.aceRule(BlackJackRules.prototype.handWithoutAce(computerHand));
+                obj.value = BlackJackRules.prototype.aceRule(BlackJackRules.prototype.handWithoutAce(hand));
             }
         });
 
-        const computerHandArrayValue = [];
-        computerHand.forEach(obj => {
-            computerHandArrayValue.push(parseInt(obj.value.toString(), 10));
+        const handArrayValue = [];
+        hand.forEach(obj => {
+            handArrayValue.push(parseInt(obj.value.toString(), 10));
         })
 
-        playerHand.forEach(obj => {
-            obj.value = BlackJackRules.prototype.setLogsRules(obj)
-            if (obj.value === "A") {
-                obj.value = BlackJackRules.prototype.aceRule(BlackJackRules.prototype.handWithoutAce(playerHand));
-            }
-        });
+        return handArrayValue.reduce((acc, curr) => acc + curr);
 
-        const playerHandArrayValue = [];
-        playerHand.forEach(obj => {
-            playerHandArrayValue.push(parseInt(obj.value.toString(), 10));
-        })
-
-        const playerHandSum = playerHandArrayValue.reduce((acc, curr) => acc + curr);
-        const computerHandSum = computerHandArrayValue.reduce((acc, curr) => acc + curr);
-
-
-        return { computerHandSum: computerHandSum, playerHandSum: playerHandSum }
     }
 
 }
