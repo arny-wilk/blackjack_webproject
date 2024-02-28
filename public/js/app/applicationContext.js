@@ -64,17 +64,20 @@ export default class ApplicationContext {
         return this.#board;
     }
 
-    startGame() {
-
+    testBtn() {
         Play.prototype.testBtn(this.#board);
+    }
 
+    startGame() {
         Play.prototype.deal(this.#btnDeal, this.#deck, this.#cards, this.#computerHand, this.#playerHand);
-
         Play.prototype.hit(this.#btnHit, this.#deck, this.#cards, this.#computerHand, this.#playerHand);
-
-
         Play.prototype.stand(this.#btnStand, this.#deck, this.#cards, this.#computerHand, this.#playerHand);
+    }
 
+    tryHit() {
+    }
+
+    tryStand() {
     }
 
     resetGame() {

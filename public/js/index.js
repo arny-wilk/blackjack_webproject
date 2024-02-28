@@ -6,4 +6,6 @@ app.getNavBar();
 app.getRules();
 app.getBoard();
 app.startGame();
+app.tryHit();
+app.tryStand();
 app.resetGame();

@@ -158,6 +158,7 @@ nav {
 
 .card_slot span {
     display: flex;
+    font-size: 2rem;
 }
 
 .card_slot span:nth-child(2) {
@@ -259,7 +260,7 @@ nav {
     }
 
     .card_slot span:nth-child(2) {
-        font-size: 4rem;
+        font-size: 6rem;
     }
 
 }

@@ -32,8 +32,8 @@ export default class Play {
     deal(btnDeal, deck, cards, computerHand, playerHand) {
 
         function proceedDeal() {
-            DeckComponentBuilder.prototype.destroyDeck(deck, cards, computerHand, playerHand);
 
+            DeckComponentBuilder.prototype.destroyDeck(deck, cards, computerHand, playerHand);
             DeckComponentBuilder.prototype.buildDeckComponent(deck, cards, computerHand, playerHand)
 
             const computerHandSum = BlackJackRules.prototype.execRules(computerHand);
@@ -49,11 +49,9 @@ export default class Play {
             if (BlackJackRules.prototype.looseByBlackJack(computerHandSum)) {
                 console.log(`its a BlackJack you loose :`, playerHandSum);
             }
-
         }
-        btnDeal?.addEventListener('click', proceedDeal);
 
-
+        return btnDeal?.addEventListener('click', proceedDeal);
     };
 
     /**
@@ -89,13 +87,9 @@ export default class Play {
             if (BlackJackRules.prototype.winByBlackJack(playerHandSum)) {
                 console.log(`BlackJack its a win :`, playerHandSum);
             }
-
-            // if (BlackJackRules.prototype.loose(playerHandSum, computerHandSum)) {
-            //     console.log(`its a loose :`, playerHandSum);
-            // }
-
         }
-        btnHit?.addEventListener('click', proceedhit);
+
+        return btnHit?.addEventListener('click', proceedhit);
 
     }
 
@@ -133,7 +127,7 @@ export default class Play {
                     computerHand.push(card);
                 }
                 const { suit, value } = computerHand[computerHand.length - 1];
-               let li = deck.createComponent('li', null, document.querySelector(".computer__deck"), [{ "name": "class", "value": "computer__card_slot card_slot" }]);
+                let li = deck.createComponent('li', null, document.querySelector(".computer__deck"), [{ "name": "class", "value": "computer__card_slot card_slot" }]);
                 deck.createComponent("span", `${suit} ${value}`, li, [{}])
                 deck.createComponent("span", `${suit}`, li, [{}])
                 deck.createComponent("span", `${suit} ${value}`, li, [{}])
@@ -143,7 +137,6 @@ export default class Play {
 
                 console.log(`computerHandSum: `, sumComp);
                 console.log(`playerHandSum: `, sumPlayer);
-
 
                 if (BlackJackRules.prototype.looseByBlackJack(sumComp)) {
                     console.log(`BlackJack, its a loose`, sumComp);
@@ -160,21 +153,14 @@ export default class Play {
                     break;
                 }
 
-
                 if (!BlackJackRules.prototype.winByComputerJump(sumComp) && BlackJackRules.prototype.loose(sumPlayer, sumComp)) {
                     console.log(`its a loose`, sumPlayer + ' < ' + sumComp);
                     break;
                 }
-
-                // if (BlackJackRules.prototype.win(sumPlayer, sumComp)) {
-                //     console.log(`its a win`, sumPlayer + ' > ' + sumComp);
-                //     break;
-                // }
             }
         }
 
-        btnStand?.addEventListener('click', proceedStand);
-
+        return btnStand?.addEventListener('click', proceedStand);
     }
 
     /**
@@ -199,6 +185,5 @@ export default class Play {
         }
         btnReset?.addEventListener('click', proceedReset);
     }
-
 
 }

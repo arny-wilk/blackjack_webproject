@@ -46,7 +46,7 @@ export default class BlackJackRules {
      * @returns {string}
      */
     aceRule(handSum) {
-        if (handSum + 11 <= 21) {
+        if (handSum + 11 <= 21 ) {
             return "11";
         }
         return "1";
