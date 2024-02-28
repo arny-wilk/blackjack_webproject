@@ -7,6 +7,7 @@ import BlackJackRules from "../smartComponents/blackJackRules.js";
 import Deck from "../smartComponents/deck.js";
 import DeckComponentBuilder from "./componentBuilder/deckComponentBuilder.js";
 
+
 /**
  *
  * @export
@@ -50,8 +51,7 @@ export default class Play {
                 console.log(`its a BlackJack you loose :`, playerHandSum);
             }
         }
-
-        return btnDeal?.addEventListener('click', proceedDeal);
+        btnDeal?.addEventListener('click', proceedDeal);
     };
 
     /**
@@ -63,7 +63,9 @@ export default class Play {
      * @param {Hand[]} playerHand
      */
     hit(btnHit, deck, cards, computerHand, playerHand) {
+
         function proceedhit() {
+
             let card = cards.pop();
             if (card !== undefined) {
                 playerHand.push(card);
@@ -88,9 +90,7 @@ export default class Play {
                 console.log(`BlackJack its a win :`, playerHandSum);
             }
         }
-
-        return btnHit?.addEventListener('click', proceedhit);
-
+        btnHit?.addEventListener('click', proceedhit);
     }
 
     /**
@@ -159,8 +159,7 @@ export default class Play {
                 }
             }
         }
-
-        return btnStand?.addEventListener('click', proceedStand);
+        btnStand?.addEventListener('click', proceedStand);
     }
 
     /**

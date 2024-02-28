@@ -158,10 +158,13 @@ nav {
 
 .card_slot span {
     display: flex;
+    margin: 1rem;
+    padding: 1rem 0 1rem 0;
     font-size: 2rem;
 }
 
 .card_slot span:nth-child(2) {
+    padding: 1rem;
     font-size: 70px;
     align-content: center;
 }
@@ -244,10 +247,7 @@ nav {
     }
 
     .deck {
-        width: 100%;
-        height: 100%;
         margin: 0;
-        padding: 0;
     }
 
     .card_slot {

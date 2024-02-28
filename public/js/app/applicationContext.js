@@ -74,12 +74,6 @@ export default class ApplicationContext {
         Play.prototype.stand(this.#btnStand, this.#deck, this.#cards, this.#computerHand, this.#playerHand);
     }
 
-    tryHit() {
-    }
-
-    tryStand() {
-    }
-
     resetGame() {
         Play.prototype.reset(this.#btnReset, this.#deck, this.#cards, this.#computerHand, this.#playerHand);
     }
