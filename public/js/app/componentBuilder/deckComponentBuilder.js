@@ -29,23 +29,25 @@ export default class DeckComponentBuilder {
     buildDeckComponent(deck, cards, computerHand, playerHand) {
 
         let cardCompFirst = cards.pop();
-        if(cardCompFirst !== undefined) {
+        if (cardCompFirst !== undefined) {
             computerHand.push(cardCompFirst);
         }
+
         let cardCompSecond = cards.pop();
-        if(cardCompSecond !== undefined) {
+        if (cardCompSecond !== undefined) {
             computerHand.push(cardCompSecond);
         }
 
         let cardPlayerFirst = cards.pop();
-        if(cardPlayerFirst !== undefined) {
+        if (cardPlayerFirst !== undefined) {
             playerHand.push(cardPlayerFirst);
         }
-        let cardPlayerSecond = cards.pop();
-        if(cardPlayerSecond !== undefined) {
-            playerHand.push(cardPlayerSecond);
 
+        let cardPlayerSecond = cards.pop();
+        if (cardPlayerSecond !== undefined) {
+            playerHand.push(cardPlayerSecond);
         }
+
         console.log(`Hand computer: `, computerHand);
         console.log(`hand Player: `, playerHand);
 
@@ -54,6 +56,7 @@ export default class DeckComponentBuilder {
             deck.createComponent("li", `${suit}, ${value}`, document.querySelector(".computer__deck"), [{ "name": "class", "value": "computer__card_slot card_slot" }]);
         }
 
+        deck.toggle(".computer__deck li:nth-child(2)", ".btn__stand", "active_last_card");
 
         for (let playerCard of playerHand) {
             const { suit, value } = playerCard;
@@ -72,14 +75,14 @@ export default class DeckComponentBuilder {
 
         while (computerHand.length > 0) {
             let cardComp = computerHand.pop();
-            if(cardComp !== undefined) {
+            if (cardComp !== undefined) {
                 cards.push(cardComp);
             }
         }
 
         while (playerHand.length > 0) {
             let cardPlayer = playerHand.pop();
-            if(cardPlayer !== undefined) {
+            if (cardPlayer !== undefined) {
                 cards.push(cardPlayer);
             }
         }

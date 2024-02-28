@@ -114,20 +114,31 @@ export default class Play {
             console.log(`computerHandSum: `, sumComp);
             console.log(`playerHandSum: `, sumPlayer);
 
-            let card = cards.pop();
-            if (card !== undefined) {
-                computerHand.push(card);
+            if (BlackJackRules.prototype.tie(sumPlayer, sumComp)) {
+                console.log(`computer don't add a card and its a tie:`, sumPlayer, sumComp);
+                return;
             }
-            const { suit, value } = computerHand[computerHand.length - 1];
-            deck.createComponent('li', `${suit}, ${value}`, document.querySelector(".computer__deck"), [{ "name": "class", "value": "computer__card_slot card_slot" }]);
 
-            sumComp = BlackJackRules.prototype.execRules(computerHand);
-            sumPlayer = BlackJackRules.prototype.execRules(playerHand);
-
-            console.log(`computerHandSum: `, sumComp);
-            console.log(`playerHandSum: `, sumPlayer);
+            if (BlackJackRules.prototype.loose(sumPlayer, sumComp)) {
+                console.log(`comp don't add a card and its a loose : `, sumPlayer + ' < ' + sumComp);
+                return;
+            }
 
             while (true) {
+
+                let card = cards.pop();
+                if (card !== undefined) {
+                    computerHand.push(card);
+                }
+                const { suit, value } = computerHand[computerHand.length - 1];
+                deck.createComponent('li', `${suit}, ${value}`, document.querySelector(".computer__deck"), [{ "name": "class", "value": "computer__card_slot card_slot" }]);
+
+                sumComp = BlackJackRules.prototype.execRules(computerHand);
+                sumPlayer = BlackJackRules.prototype.execRules(playerHand);
+
+                console.log(`computerHandSum: `, sumComp);
+                console.log(`playerHandSum: `, sumPlayer);
+
 
                 if (BlackJackRules.prototype.looseByBlackJack(sumComp)) {
                     console.log(`BlackJack, its a loose`, sumComp);
@@ -139,41 +150,22 @@ export default class Play {
                     break;
                 }
 
-                if (BlackJackRules.prototype.loose(sumComp, sumPlayer)) {
+                if (BlackJackRules.prototype.tie(sumPlayer, sumComp)) {
+                    console.log(`its a tie:`, sumPlayer, ' = ', sumComp);
+                    break;
+                }
+
+
+                if (!BlackJackRules.prototype.winByComputerJump(sumComp) && BlackJackRules.prototype.loose(sumPlayer, sumComp)) {
                     console.log(`its a loose`, sumPlayer + ' < ' + sumComp);
                     break;
                 }
 
-                if (BlackJackRules.prototype.tie(sumPlayer, sumComp)) {
-                    console.log(`its a tie:`, sumPlayer, sumComp);
-                    break;
-                }
-
-                if (BlackJackRules.prototype.win(sumComp, sumPlayer)) {
-                    console.log(`its a win`, sumPlayer + ' > ' + sumComp);
-                    break;
-                }
-
+                // if (BlackJackRules.prototype.win(sumPlayer, sumComp)) {
+                //     console.log(`its a win`, sumPlayer + ' > ' + sumComp);
+                //     break;
+                // }
             }
-
-
-            // while (!BlackJackRules.prototype.winByComputerJump(computerHandSum)) {
-            //     let { computerHandSum, playerHandSum } = BlackJackRules.prototype.execRules(computerHand, playerHand);
-            //     if (BlackJackRules.prototype.looseByBlackJack(computerHandSum)) {
-            //         console.log(`Blackjack its a loose:`, computerHandSum);
-            //         break;
-            //     }
-
-            //     if (BlackJackRules.prototype.win(playerHandSum, computerHandSum)) {
-            //         console.log(`its a win`, playerHandSum + ' > ' + computerHandSum);
-            //         break;
-            //     }
-
-            //     if (BlackJackRules.prototype.loose(playerHandSum, computerHandSum)) {
-            //         console.log(`its a loose :`, playerHandSum);
-            //         break;
-            //     }
-            // }
         }
 
         btnStand?.addEventListener('click', proceedStand);

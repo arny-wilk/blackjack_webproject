@@ -123,11 +123,11 @@ nav {
     list-style-type: none;
 }
 
-.computer__deck li:nth-last-child(1) {
+.computer__deck li:nth-child(2) {
     display: none;
 }
 
-.computer__deck li:nth-last-child(1).active_last_card {
+.computer__deck li:nth-child(2).active_last_card {
     display: block;
 }
 

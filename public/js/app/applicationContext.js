@@ -72,6 +72,7 @@ export default class ApplicationContext {
 
         Play.prototype.hit(this.#btnHit, this.#deck, this.#cards, this.#computerHand, this.#playerHand);
 
+
         Play.prototype.stand(this.#btnStand, this.#deck, this.#cards, this.#computerHand, this.#playerHand);
 
     }
