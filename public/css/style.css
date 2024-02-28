@@ -2,14 +2,16 @@
 
 /* root and rebase CSS */
 :root {
-  background-color: rgb(14, 80, 23);  
-  background-image: radial-gradient(circle, green, darkgreen);
-  color: aliceblue;
-  font-size: 62.5%;
-  font-family: "display";
+    background-color: rgb(14, 80, 23);
+    background-image: radial-gradient(circle, green, darkgreen);
+    color: aliceblue;
+    font-size: 62.5%;
+    font-family: "display";
 }
 
-*, ::before, ::after {
+*,
+::before,
+::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -39,7 +41,7 @@ nav {
 
 .item-nav a {
     text-decoration: none;
-    color:aliceblue;
+    color: aliceblue;
 }
 
 .btn-toggle-container {
@@ -68,7 +70,8 @@ nav {
 .summary__blackjack_rules {
     margin: 1rem;
     padding: 1rem;
-    font-size: 2rem;;
+    font-size: 2rem;
+    ;
 }
 
 .details_help {
@@ -112,16 +115,20 @@ nav {
 .deck {
     margin: 2rem;
     padding: 1rem;
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
 }
 
 /* .computer__deck {
 } */
 
-.computer__deck li {
+/* .computer__deck li {
     margin: 2rem;
     padding: 1rem;
     list-style-type: none;
-}
+} */
 
 .computer__deck li:nth-child(2) {
     display: none;
@@ -134,12 +141,36 @@ nav {
 /* .player__deck {
 } */
 
-.player__deck li {
+/* .player__deck li {
     margin: 2rem;
     padding: 1rem;
     list-style-type: none;
+} */
+
+/*  card position */
+
+/* card dimension and shape  */
+.card_slot {
+    color: black;
+    background-color: aliceblue;
+    border-radius: 10px;
 }
 
+.card_slot span {
+    display: flex;
+}
+
+.card_slot span:nth-child(2) {
+    font-size: 70px;
+    align-content: center;
+}
+
+.card_slot span:nth-last-child(1) {
+    rotate: calc(180deg);
+}
+
+
+/* btn board dimension and shape */
 .btn__board {
     width: 15rem;
     height: 10rem;
@@ -156,31 +187,37 @@ nav {
 
 .btn__board.btn__deal {
     background-color: greenyellow;
-    background-image: radial-gradient(circle, greenyellow, darkgreen);;
+    background-image: radial-gradient(circle, greenyellow, darkgreen);
+    ;
 }
 
 .btn__board.btn__hit {
     background-color: chocolate;
-    background-image: radial-gradient(circle, chocolate, rgb(154, 33, 33));;
+    background-image: radial-gradient(circle, chocolate, rgb(154, 33, 33));
+    ;
 }
 
 .btn__board.btn__stand {
     background-color: burlywood;
-    background-image: radial-gradient(circle, burlywood, rgb(133, 75, 4));;
+    background-image: radial-gradient(circle, burlywood, rgb(133, 75, 4));
+    ;
 }
 
 .btn__board.btn__restart {
     background-color: red;
-    background-image: radial-gradient(circle, red, rgb(118, 0, 0));;
+    background-image: radial-gradient(circle, red, rgb(118, 0, 0));
+    ;
 }
 
 .btn__board.btn__test_game {
     background-color: aqua;
-    background-image: radial-gradient(circle, aqua, blue);;
+    background-image: radial-gradient(circle, aqua, blue);
+    ;
 }
 
 /* Media screen responsive for max-width 650px */
 @media screen and (max-width: 650px) {
+
     .btn-toggle-container {
         display: block;
     }
@@ -203,6 +240,26 @@ nav {
 
     .liste-nav.active-menu {
         display: block;
+    }
+
+    .deck {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    .card_slot {
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+
+    .card_slot span {
+        font-size: 2rem;
+    }
+
+    .card_slot span:nth-child(2) {
+        font-size: 4rem;
     }
 
 }

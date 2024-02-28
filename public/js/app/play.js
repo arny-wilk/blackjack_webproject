@@ -32,9 +32,8 @@ export default class Play {
     deal(btnDeal, deck, cards, computerHand, playerHand) {
 
         function proceedDeal() {
-            // if (computerHand.length > 0 && playerHand.length > 0) {
             DeckComponentBuilder.prototype.destroyDeck(deck, cards, computerHand, playerHand);
-            // }
+
             DeckComponentBuilder.prototype.buildDeckComponent(deck, cards, computerHand, playerHand)
 
             const computerHandSum = BlackJackRules.prototype.execRules(computerHand);
@@ -72,7 +71,10 @@ export default class Play {
                 playerHand.push(card);
             }
             const { suit, value } = playerHand[playerHand.length - 1];
-            deck.createComponent('li', `${suit}, ${value}`, document.querySelector(".player__deck"), [{ "name": "class", "value": "player__card_slot card_slot" }]);
+            let li = deck.createComponent('li', null, document.querySelector(".player__deck"), [{ "name": "class", "value": "player__card_slot card_slot" }]);
+            deck.createComponent("span", `${suit} ${value}`, li, [{}])
+            deck.createComponent("span", `${suit}`, li, [{}])
+            deck.createComponent("span", `${suit} ${value}`, li, [{}])
 
             const computerHandSum = BlackJackRules.prototype.execRules(computerHand);
             const playerHandSum = BlackJackRules.prototype.execRules(playerHand);
@@ -131,7 +133,10 @@ export default class Play {
                     computerHand.push(card);
                 }
                 const { suit, value } = computerHand[computerHand.length - 1];
-                deck.createComponent('li', `${suit}, ${value}`, document.querySelector(".computer__deck"), [{ "name": "class", "value": "computer__card_slot card_slot" }]);
+               let li = deck.createComponent('li', null, document.querySelector(".computer__deck"), [{ "name": "class", "value": "computer__card_slot card_slot" }]);
+                deck.createComponent("span", `${suit} ${value}`, li, [{}])
+                deck.createComponent("span", `${suit}`, li, [{}])
+                deck.createComponent("span", `${suit} ${value}`, li, [{}])
 
                 sumComp = BlackJackRules.prototype.execRules(computerHand);
                 sumPlayer = BlackJackRules.prototype.execRules(playerHand);

@@ -53,14 +53,20 @@ export default class DeckComponentBuilder {
 
         for (let computerCard of computerHand) {
             const { suit, value } = computerCard;
-            deck.createComponent("li", `${suit}, ${value}`, document.querySelector(".computer__deck"), [{ "name": "class", "value": "computer__card_slot card_slot" }]);
+            let li = deck.createComponent("li", null, document.querySelector(".computer__deck"), [{ "name": "class", "value": "computer__card_slot card_slot" }]);
+            deck.createComponent("span", `${suit} ${value}`, li, [{}])
+            deck.createComponent("span", `${suit}`, li, [{}])
+            deck.createComponent("span", `${suit} ${value}`, li, [{}])
         }
 
         deck.toggle(".computer__deck li:nth-child(2)", ".btn__stand", "active_last_card");
 
         for (let playerCard of playerHand) {
             const { suit, value } = playerCard;
-            deck.createComponent("li", `${suit}, ${value}`, document.querySelector(".player__deck"), [{ "name": "class", "value": "player__card_slot card_slot" }]);
+            let li = deck.createComponent("li", null, document.querySelector(".player__deck"), [{ "name": "class", "value": "player__card_slot card_slot" }]);
+            deck.createComponent("span", `${suit} ${value}`, li, [{}])
+            deck.createComponent("span", `${suit}`, li, [{}])
+            deck.createComponent("span", `${suit} ${value}`, li, [{}])
         }
 
     }
