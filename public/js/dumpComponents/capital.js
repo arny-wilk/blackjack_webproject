@@ -5,11 +5,11 @@ import Dom from "../utilities/dom.js";
 /**
  *
  * @export
- * @class Wager
- * @typedef {Wager} Readable
+ * @class Capital
+ * @typedef {Capital} Readable
  * @extends {Dom}
  */
-export default class Wager extends Dom {
+export default class Capital extends Dom {
 
     constructor() {
         super();

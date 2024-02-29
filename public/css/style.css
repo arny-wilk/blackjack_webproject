@@ -192,32 +192,39 @@ nav {
 .btn__board.btn__deal {
     background-color: greenyellow;
     background-image: radial-gradient(circle, greenyellow, darkgreen);
-    ;
 }
 
 .btn__board.btn__hit {
     background-color: chocolate;
     background-image: radial-gradient(circle, chocolate, rgb(154, 33, 33));
-    ;
+    display: none;
 }
 
 .btn__board.btn__stand {
     background-color: burlywood;
     background-image: radial-gradient(circle, burlywood, rgb(133, 75, 4));
-    ;
+    display: none;
 }
 
-.btn__board.btn__restart {
+.btn__hit.active_btn {
+    display: inline;
+}
+
+.btn__stand.active_btn {
+    display: inline;
+}
+
+.btn__board.btn__reset {
     background-color: red;
     background-image: radial-gradient(circle, red, rgb(118, 0, 0));
-    ;
 }
 
 .btn__board.btn__test_game {
     background-color: aqua;
     background-image: radial-gradient(circle, aqua, blue);
-    ;
 }
+
+
 
 /* Media screen responsive for max-width 650px */
 @media screen and (max-width: 650px) {

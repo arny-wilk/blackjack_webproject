@@ -23,10 +23,7 @@ export default class BoardComponentBuilder {
         board.createComponent("button", "Hit", document.querySelector(".board__panel"), [{"name": "type", "value": "button"}, {"name": "class", "value": "btn__board btn__hit"}]);
         board.createComponent("button", "Stand", document.querySelector(".board__panel"), [{"name": "type", "value": "button"}, {"name": "class", "value": "btn__board btn__stand"}]);
         // board.createComponent("button", "restart", document.querySelector(".board__panel"), [{"name": "type", "value": "button"}, {"name": "class", "value": "btn__board btn__restart"}]);
-
-        
-        board.createComponent("button", "Reset", document.querySelector(".board__panel"), [{"name": "type", "value": "reset"}, {"name": "class", "value": "btn__board btn__reset"}]);
-
+        board.createComponent("button", "Restart", document.querySelector(".board__panel"), [{"name": "type", "value": "reset"}, {"name": "class", "value": "btn__board btn__reset"}]);
         board.createComponent("button", "Test", document.querySelector(".board__panel"), [{"name": "type", "value": "button"}, {"name": "class", "value": "btn__board btn__test_game"}]);
 
         return board;

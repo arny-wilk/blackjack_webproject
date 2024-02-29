@@ -51,6 +51,21 @@ export default class Dom {
 
   /**
    *
+   * @param {string} parentSelector
+   * @param {string} childSelector
+   * @param {string} appendChild
+   */
+  add(parentSelector, childSelector, appendChild) {
+    const component = document.querySelector(parentSelector);
+    const btnComponent = document.querySelector(childSelector);
+
+    btnComponent?.addEventListener("click", function () {
+      component?.classList.add(appendChild);
+    });
+  }
+
+  /**
+   *
    * @param {string } selector
    */
   destroyComponent(selector) {
@@ -63,6 +78,6 @@ export default class Dom {
    * @param {string} selector
    */
   destroyAllComponent(selector) {
-    document.querySelectorAll(selector)?.forEach(node=> node.remove);
+    document.querySelectorAll(selector)?.forEach(node => node.remove);
   }
 }

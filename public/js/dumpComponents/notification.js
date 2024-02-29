@@ -2,14 +2,15 @@
 
 import Dom from "../utilities/dom.js";
 
+
 /**
  *
  * @export
- * @class Wager
- * @typedef {Wager} Readable
+ * @class Notification
+ * @typedef {Notification} Readable
  * @extends {Dom}
  */
-export default class Wager extends Dom {
+export default class Notification extends Dom {
 
     constructor() {
         super();
