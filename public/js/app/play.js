@@ -3,6 +3,7 @@
 import Board from "../dumpComponents/board.js";
 import Card from "../dumpComponents/card.js";
 import Hand from "../dumpComponents/hand.js";
+import Notification from "../dumpComponents/notification.js";
 import BlackJackRules from "../smartComponents/blackJackRules.js";
 import Deck from "../smartComponents/deck.js";
 import DeckComponentBuilder from "./componentBuilder/deckComponentBuilder.js";
@@ -28,16 +29,17 @@ export default class Play {
      * @param {*} btnDeal
      * @param {Deck} deck
      * @param {Card[]} cards
+     * @param {Notification} notification
      * @param {Hand[]} computerHand
      * @param {Hand[]} playerHand
      */
-    deal(btnDeal, deck, cards, computerHand, playerHand) {
+    deal(btnDeal, deck, cards, notification, computerHand, playerHand) {
 
         deck.add(".btn__hit", ".btn__deal", "active_btn")
         deck.add(".btn__stand", ".btn__deal", "active_btn")
 
         function proceedDeal() {
-
+            NotificationBuilder.prototype.destroyNotification(notification);
             DeckComponentBuilder.prototype.destroyDeck(deck, cards, computerHand, playerHand);
             DeckComponentBuilder.prototype.buildDeckComponent(deck, cards, computerHand, playerHand)
 
@@ -45,18 +47,19 @@ export default class Play {
             const playerHandSum = BlackJackRules.prototype.execRules(playerHand);
 
             if (BlackJackRules.prototype.winByBlackJack(playerHandSum)) {
-                let result = "BJW"
-                const dialog = NotificationBuilder.prototype.buildNotification(result);
-                dialog.show();
+                console.log(`its a blackjack you won`, playerHandSum);
+                NotificationBuilder.prototype.buildBlackJackWinNotification(notification).show();
             }
 
             if (BlackJackRules.prototype.looseByBlackJack(computerHandSum)) {
-                let result = "BJL"
-                const dialog = NotificationBuilder.prototype.buildNotification(result);
-                dialog.show();
+                console.log(`its a blackjack you loose `, computerHandSum);
+                NotificationBuilder.prototype.buildBlackJackLooseNotification(notification).show();
             }
         }
-        btnDeal?.addEventListener('click', proceedDeal);
+        btnDeal?.addEventListener('click', () => {
+            proceedDeal();
+            this.closeDialog(notification);
+        });
     };
 
     /**
@@ -64,10 +67,11 @@ export default class Play {
      * @param {*} btnHit
      * @param {Deck} deck
      * @param {Card[]} cards
+     * @param {Notification} notification
      * @param {Hand[]} computerHand
      * @param {Hand[]} playerHand
      */
-    hit(btnHit, deck, cards, computerHand, playerHand) {
+    hit(btnHit, deck, cards, notification, computerHand, playerHand) {
 
         function proceedhit() {
 
@@ -86,20 +90,19 @@ export default class Play {
 
             if (BlackJackRules.prototype.looseByJump(playerHandSum)) {
                 console.log(`You jumped its a loose :`, playerHandSum);
-                let result = "L"
-                const dialog = NotificationBuilder.prototype.buildNotification(result);
-                dialog.show();
+                NotificationBuilder.prototype.buildLooseNotification(notification).show();
             }
 
             if (BlackJackRules.prototype.winByBlackJack(playerHandSum)) {
                 console.log(`BlackJack its a win :`, playerHandSum);
-                let result = "BJW"
-                const dialog = NotificationBuilder.prototype.buildNotification(result);
-                dialog.show();
+                NotificationBuilder.prototype.buildBlackJackWinNotification(notification).show();
             }
         }
 
-        btnHit?.addEventListener('click', proceedhit);
+        btnHit?.addEventListener('click', () => {
+            proceedhit();
+            this.closeDialog(notification);
+        });
     }
 
     /**
@@ -107,10 +110,11 @@ export default class Play {
      * @param {*} btnStand
      * @param {Deck} deck
      * @param {Card[]} cards
+     * @param {Notification} notification
      * @param {Hand[]} computerHand
      * @param {Hand[]} playerHand
      */
-    stand(btnStand, deck, cards, computerHand, playerHand) {
+    stand(btnStand, deck, cards, notification, computerHand, playerHand) {
 
         function proceedStand() {
 
@@ -122,16 +126,12 @@ export default class Play {
 
             if (BlackJackRules.prototype.tie(sumPlayer, sumComp)) {
                 console.log(`computer don't add a card and its a tie:`, sumPlayer, sumComp);
-                let result = "T"
-                const dialog = NotificationBuilder.prototype.buildNotification(result);
-                dialog.show();
+                NotificationBuilder.prototype.buildTieNotification(notification).show();
             }
 
             if (BlackJackRules.prototype.loose(sumPlayer, sumComp)) {
                 console.log(`comp don't add a card and its a loose : `, sumPlayer + ' < ' + sumComp);
-                let result = "L"
-                const dialog = NotificationBuilder.prototype.buildNotification(result);
-                dialog.show();
+                NotificationBuilder.prototype.buildLooseNotification(notification).show();
             }
 
             while (true) {
@@ -154,42 +154,33 @@ export default class Play {
 
                 if (BlackJackRules.prototype.looseByBlackJack(sumComp)) {
                     console.log(`BlackJack, its a loose`, sumComp);
-                    let result = "BJL"
-                    const dialog = NotificationBuilder.prototype.buildNotification(result);
-                    dialog.show();
+                    NotificationBuilder.prototype.buildBlackJackLooseNotification(notification).show();
                     break;
                 }
 
                 if (BlackJackRules.prototype.winByComputerJump(sumComp)) {
                     console.log(`computer Jumped its a win`, sumComp);
-
-                    let result = "W"
-                    const dialog = NotificationBuilder.prototype.buildNotification(result);
-                    dialog.show();
+                    NotificationBuilder.prototype.buildWinNotification(notification).show();
                     break;
                 }
 
                 if (BlackJackRules.prototype.tie(sumPlayer, sumComp)) {
                     console.log(`its a tie:`, sumPlayer, ' = ', sumComp);
-
-                    let result = "T"
-                    const dialog = NotificationBuilder.prototype.buildNotification(result);
-                    dialog.show();
+                    NotificationBuilder.prototype.buildTieNotification(notification).show();
                     break;
                 }
 
                 if (!BlackJackRules.prototype.winByComputerJump(sumComp) && BlackJackRules.prototype.loose(sumPlayer, sumComp)) {
                     console.log(`its a loose`, sumPlayer + ' < ' + sumComp);
-
-                    let result = "W"
-                    const dialog = NotificationBuilder.prototype.buildNotification(result);
-                    dialog.show();
+                    NotificationBuilder.prototype.buildWinNotification(notification).show();
                     break;
                 }
             }
         }
-
-        btnStand?.addEventListener('click', proceedStand);
+        btnStand?.addEventListener('click', () => {
+            proceedStand();
+            this.closeDialog(notification);
+        });
     }
 
     /**
@@ -200,18 +191,31 @@ export default class Play {
         board.toggle(".computer__deck li:nth-last-child(1)", ".btn__test_game", "active_last_card");
     }
 
+
+    /**
+     * @param {Notification} notification
+     */
+    closeDialog(notification) {
+        document.getElementById("dialog__notification")?.addEventListener("click", (e) => {
+            e.preventDefault();
+            NotificationBuilder.prototype.destroyNotification(notification);
+        })
+    }
+
     /**
      *
      * @param {*} btnReset
      * @param {Deck} deck
      * @param {Card[]} cards
+     * @param {Notification} notification
      * @param {Hand[]} computerHand
      * @param {Hand[]} playerHand
      */
-    reset(btnReset, deck, cards, computerHand, playerHand) {
+    reset(btnReset, deck, cards, notification, computerHand, playerHand) {
 
         function proceedReset() {
-            return DeckComponentBuilder.prototype.destroyDeck(deck, cards, computerHand, playerHand)
+            NotificationBuilder.prototype.destroyNotification(notification);
+            DeckComponentBuilder.prototype.destroyDeck(deck, cards, computerHand, playerHand)
         }
         btnReset?.addEventListener('click', proceedReset);
     }

@@ -1,6 +1,7 @@
 import Notification from "../../dumpComponents/notification.js";
 
 export default class NotificationBuilder {
+
     constructor() {
         throw new Error(
             "The constructor is private please use dedicated method instead",
@@ -8,59 +9,65 @@ export default class NotificationBuilder {
     }
 
     /**
-     * Description placeholder
-     * @date 2/29/2024 - 4:23:30 PM
+     * DRY problem here 
      *
-     * @param {string} result
-     * return {HTMLDialogElement}
+     * @type {Notification} notification
      */
-    buildNotification(result) {
-        const notification = new Notification();
+    buildWinNotification(notification) {
         const dialog = notification.createComponent("dialog", null, document.querySelector(".notification__panel"), [{ "name": "id", "value": "dialog__notification" }]);
-        // notification.createComponent("p", )
-        switch (result) {
-            case "W":
-                notification.createComponent("p", this.winMessage(), dialog, [{"name": "class", "value": "win__notification"}]);
-                break;
-            case "BJW":
-                notification.createComponent("p", this.winByBlackJackMessage(), dialog, [{"name": "class", "value": "blackjack__win_notification"}]);
-                break;
-            case "L":
-                notification.createComponent("p", this.looseMessage(), dialog, [{"name": "class", "value": "loose__notification"}]);
-                break;
-            case "BJL":
-                notification.createComponent("p", this.looseByBlackJackMessage(), dialog, [{"name": "class", "value": "blackjack__loose_notification"}]);
-                break;
-            case "T":
-                notification.createComponent("p", this.tieMessage(), dialog, [{"name": "class", "value": "tie__notification"}]);
-            default:
-                break;
-        }
-        const form = notification.createComponent("form", null, dialog, [{"name": "method", "value": "dialog"}, {"name": "id", "value": "dialog__box_notification"}]);
-        notification.createComponent("button", "Restart", form, [{"name": "type", "value": "reset"}, {"name": "class", "value": "btn__board btn__reset"}]);
-        // the button is the one created in BoardComponentBuilder restart button
-
+        notification.createComponent("p", "its a win !", dialog, [{ "name": "class", "value": "win__message" }]);
+        notification.createComponent("form", null, dialog, [{ "name": "method", "value": "dialog" }, { "name": "class", "value": "dialog__box_notification" }]);
         return dialog;
     }
 
-    winMessage() {
-        return "You won Congrats !";
+    /**
+     *
+     * @param {Notification} notification
+     */
+    buildLooseNotification(notification) {
+        const dialog = notification.createComponent("dialog", null, document.querySelector(".notification__panel"), [{ "name": "id", "value": "dialog__notification" }]);
+        notification.createComponent("p", "its a loose", dialog, [{ "name": "class", "value": "loose__message" }]);
+        notification.createComponent("form", null, dialog, [{ "name": "method", "value": "dialog" }, { "name": "class", "value": "dialog__box_notification" }]);
+        return dialog;
     }
 
-    winByBlackJackMessage() {
-        return "It's a blackjack you won Congrats !";
+    /**
+     * @param {Notification} notification
+     */
+    buildBlackJackWinNotification(notification) {
+        const dialog = notification.createComponent("dialog", null, document.querySelector(".notification__panel"), [{ "name": "id", "value": "dialog__notification" }]);
+        notification.createComponent("p", "It's a blackjack you won Congrats !", dialog, [{ "name": "class", "value": "blackjack__win_message" }]);
+        notification.createComponent("form", null, dialog, [{ "name": "method", "value": "dialog" }, { "name": "class", "value": "dialog__box_notification" }]);
+        return dialog;
     }
 
-    looseMessage() {
-        return "You loose sorry!";
+    /**
+     *
+     * @param {Notification} notification
+     */
+    buildBlackJackLooseNotification(notification) {
+        const dialog = notification.createComponent("dialog", null, document.querySelector(".notification__panel"), [{ "name": "id", "value": "dialog__notification" }]);
+        notification.createComponent("p", "It's a blackjack you lost sorry", dialog, [{ "name": "class", "value": "blackjack__loose_message" }]);
+        notification.createComponent("form", null, dialog, [{ "name": "method", "value": "dialog" }, { "name": "class", "value": "dialog__box_notification" }]);
+        return dialog;
     }
 
-    looseByBlackJackMessage() {
-        return "It's a blackjack you loose sorry!";
+    /**
+     *
+     * @param {Notification} notification
+     */
+    buildTieNotification(notification) {
+        const dialog = notification.createComponent("dialog", null, document.querySelector(".notification__panel"), [{ "name": "id", "value": "dialog__notification" }]);
+        notification.createComponent("p", "It's a blackjack you loose sorry", dialog, [{ "name": "class", "value": "tie__message" }]);
+        notification.createComponent("form", null, dialog, [{ "name": "method", "value": "dialog" }, { "name": "class", "value": "dialog__box_notification" }]);
+        return dialog;
     }
 
-    tieMessage() {
-        return "its a tie";
+    /**
+     *
+     * @param {Notification} notification
+     */
+    destroyNotification(notification) {
+        notification.destroyComponentById("dialog__notification");
     }
-
 }

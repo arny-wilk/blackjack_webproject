@@ -68,7 +68,6 @@ export default class DeckComponentBuilder {
             deck.createComponent("span", `${suit}`, li, [{}])
             deck.createComponent("span", `${suit} ${value}`, li, [{}])
         }
-
     }
 
     /**
@@ -104,5 +103,4 @@ export default class DeckComponentBuilder {
         deck.shuffle();
 
     }
-
 }

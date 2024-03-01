@@ -72,6 +72,13 @@ export default class Dom {
     document.querySelector(selector)?.remove();
   }
 
+  /**
+   *
+   * @param {string} id
+   */
+  destroyComponentById(id) {
+    document.getElementById(id)?.remove();
+  }
 
   /**
    *

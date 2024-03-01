@@ -1,6 +1,7 @@
 //@ts-check
 
 import Hand from "../dumpComponents/hand.js";
+import Notification from "../dumpComponents/notification.js";
 import Deck from "../smartComponents/deck.js";
 import BoardComponentBuilder from "./componentBuilder/boardComponentBuilder.js";
 import NavBarComponentBuilder from "./componentBuilder/navbarComponentBuilder.js";
@@ -16,6 +17,14 @@ export default class ApplicationContext {
     #btnReset
     #btnHit
     #btnStand
+
+
+    /**
+     *
+     * @type {Notification}
+     */
+    #notification
+
 
     /**
      *
@@ -41,6 +50,7 @@ export default class ApplicationContext {
     constructor() {
         this.#navBar = NavBarComponentBuilder.prototype.buildNavBarComponent();
         this.#rules = RulesComponentBuilder.prototype.buildSectionRulesComponent();
+        this.#notification = new Notification();
         this.#board = BoardComponentBuilder.prototype.buildBoardComponent();
         this.#deck = new Deck;
         this.#cards = this.#deck.getCards();
@@ -69,13 +79,13 @@ export default class ApplicationContext {
     }
 
     startGame() {
-        Play.prototype.deal(this.#btnDeal, this.#deck, this.#cards, this.#computerHand, this.#playerHand);
-        Play.prototype.hit(this.#btnHit, this.#deck, this.#cards, this.#computerHand, this.#playerHand);
-        Play.prototype.stand(this.#btnStand, this.#deck, this.#cards, this.#computerHand, this.#playerHand);
+        Play.prototype.deal(this.#btnDeal, this.#deck, this.#cards, this.#notification, this.#computerHand, this.#playerHand);
+        Play.prototype.hit(this.#btnHit, this.#deck, this.#cards, this.#notification, this.#computerHand, this.#playerHand);
+        Play.prototype.stand(this.#btnStand, this.#deck, this.#cards, this.#notification, this.#computerHand, this.#playerHand);
+        Play.prototype.closeDialog(this.#notification);
     }
 
     resetGame() {
-        Play.prototype.reset(this.#btnReset, this.#deck, this.#cards, this.#computerHand, this.#playerHand);
+        Play.prototype.reset(this.#btnReset, this.#deck, this.#cards, this.#notification, this.#computerHand, this.#playerHand);
     }
-
 }

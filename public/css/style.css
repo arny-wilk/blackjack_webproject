@@ -224,6 +224,21 @@ nav {
     background-image: radial-gradient(circle, aqua, blue);
 }
 
+.notification__panel {
+    position: relative;
+    left: 45%;
+    top: 30%;
+}
+
+dialog {
+    cursor: pointer;
+}
+
+dialog p {
+    width: 15rem;
+    height: 15rem;
+}
+
 
 
 /* Media screen responsive for max-width 650px */
@@ -269,5 +284,6 @@ nav {
     .card_slot span:nth-child(2) {
         font-size: 6rem;
     }
+
 
 }
