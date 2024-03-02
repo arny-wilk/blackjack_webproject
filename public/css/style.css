@@ -71,7 +71,6 @@ nav {
     margin: 1rem;
     padding: 1rem;
     font-size: 2rem;
-    ;
 }
 
 .details_help {
@@ -159,7 +158,7 @@ nav {
 .card_slot span {
     display: flex;
     margin: 1rem;
-    padding: 1rem 0 1rem 0;
+    padding: 1rem;
     font-size: 2rem;
 }
 
@@ -226,19 +225,26 @@ nav {
 
 .notification__panel {
     position: relative;
+    width: 35%;
     left: 45%;
     top: 30%;
 }
 
 dialog {
+    background-color: aqua;
+    background-image: radial-gradient(circle, aqua, blue);
+    border-radius: 25px;
     cursor: pointer;
+    text-align: center;
 }
 
-dialog p {
-    width: 15rem;
-    height: 15rem;
+.message {
+    width: 19rem;
+    height: 19rem;
+    font-size: large;
+    font-weight: bold;
+    color: rgb(21, 21, 21);
 }
-
 
 
 /* Media screen responsive for max-width 650px */
@@ -274,7 +280,6 @@ dialog p {
 
     .card_slot {
         flex-direction: column;
-        flex-wrap: wrap;
     }
 
     .card_slot span {
@@ -283,6 +288,10 @@ dialog p {
 
     .card_slot span:nth-child(2) {
         font-size: 6rem;
+    }
+
+    .notification__panel {
+        width: 42%;
     }
 
 

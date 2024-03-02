@@ -41,8 +41,8 @@ export default class Play {
         function proceedDeal() {
             NotificationBuilder.prototype.destroyNotification(notification);
             DeckComponentBuilder.prototype.destroyDeck(deck, cards, computerHand, playerHand);
-            DeckComponentBuilder.prototype.buildDeckComponent(deck, cards, computerHand, playerHand)
 
+            DeckComponentBuilder.prototype.buildDeckComponent(deck, cards, computerHand, playerHand)
             const computerHandSum = BlackJackRules.prototype.execRules(computerHand);
             const playerHandSum = BlackJackRules.prototype.execRules(playerHand);
 
@@ -57,8 +57,8 @@ export default class Play {
             }
         }
         btnDeal?.addEventListener('click', () => {
-            proceedDeal();
             this.closeDialog(notification);
+            proceedDeal();
         });
     };
 
@@ -101,7 +101,6 @@ export default class Play {
 
         btnHit?.addEventListener('click', () => {
             proceedhit();
-            this.closeDialog(notification);
         });
     }
 
@@ -126,12 +125,12 @@ export default class Play {
 
             if (BlackJackRules.prototype.tie(sumPlayer, sumComp)) {
                 console.log(`computer don't add a card and its a tie:`, sumPlayer, sumComp);
-                NotificationBuilder.prototype.buildTieNotification(notification).show();
+                return NotificationBuilder.prototype.buildTieNotification(notification).show();
             }
 
             if (BlackJackRules.prototype.loose(sumPlayer, sumComp)) {
                 console.log(`comp don't add a card and its a loose : `, sumPlayer + ' < ' + sumComp);
-                NotificationBuilder.prototype.buildLooseNotification(notification).show();
+                return NotificationBuilder.prototype.buildLooseNotification(notification).show();
             }
 
             while (true) {
@@ -172,7 +171,7 @@ export default class Play {
 
                 if (!BlackJackRules.prototype.winByComputerJump(sumComp) && BlackJackRules.prototype.loose(sumPlayer, sumComp)) {
                     console.log(`its a loose`, sumPlayer + ' < ' + sumComp);
-                    NotificationBuilder.prototype.buildWinNotification(notification).show();
+                    NotificationBuilder.prototype.buildLooseNotification(notification).show();
                     break;
                 }
             }
@@ -217,7 +216,10 @@ export default class Play {
             NotificationBuilder.prototype.destroyNotification(notification);
             DeckComponentBuilder.prototype.destroyDeck(deck, cards, computerHand, playerHand)
         }
-        btnReset?.addEventListener('click', proceedReset);
+        btnReset?.addEventListener('click', () => {
+            proceedReset();
+            this.closeDialog(notification);
+        });
     }
 
 }
