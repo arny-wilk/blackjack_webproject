@@ -40,8 +40,6 @@ export default class Play {
 
         function proceedDeal() {
             NotificationBuilder.prototype.destroyNotification(notification);
-            DeckComponentBuilder.prototype.destroyDeck(deck, cards, computerHand, playerHand);
-
             DeckComponentBuilder.prototype.buildDeckComponent(deck, cards, computerHand, playerHand)
             const computerHandSum = BlackJackRules.prototype.execRules(computerHand);
             const playerHandSum = BlackJackRules.prototype.execRules(playerHand);
@@ -57,8 +55,10 @@ export default class Play {
             }
         }
         btnDeal?.addEventListener('click', () => {
-            this.closeDialog(notification);
+            NotificationBuilder.prototype.destroyNotification(notification);
+            DeckComponentBuilder.prototype.destroyDeck(deck, cards, computerHand, playerHand);
             proceedDeal();
+            this.closeDialog(notification);
         });
     };
 
@@ -100,7 +100,9 @@ export default class Play {
         }
 
         btnHit?.addEventListener('click', () => {
+            NotificationBuilder.prototype.destroyNotification(notification);
             proceedhit();
+            this.closeDialog(notification);
         });
     }
 
@@ -117,7 +119,6 @@ export default class Play {
 
         function proceedStand() {
 
-
             let sumComp = BlackJackRules.prototype.execRules(computerHand);
             let sumPlayer = BlackJackRules.prototype.execRules(playerHand);
             console.log(`computerHandSum: `, sumComp);
@@ -125,12 +126,12 @@ export default class Play {
 
             if (BlackJackRules.prototype.tie(sumPlayer, sumComp)) {
                 console.log(`computer don't add a card and its a tie:`, sumPlayer, sumComp);
-                return NotificationBuilder.prototype.buildTieNotification(notification).show();
+                NotificationBuilder.prototype.buildTieNotification(notification).show();
             }
 
             if (BlackJackRules.prototype.loose(sumPlayer, sumComp)) {
                 console.log(`comp don't add a card and its a loose : `, sumPlayer + ' < ' + sumComp);
-                return NotificationBuilder.prototype.buildLooseNotification(notification).show();
+                NotificationBuilder.prototype.buildLooseNotification(notification).show();
             }
 
             while (true) {
@@ -177,6 +178,7 @@ export default class Play {
             }
         }
         btnStand?.addEventListener('click', () => {
+            NotificationBuilder.prototype.destroyNotification(notification);
             proceedStand();
             this.closeDialog(notification);
         });
@@ -195,8 +197,7 @@ export default class Play {
      * @param {Notification} notification
      */
     closeDialog(notification) {
-        document.getElementById("dialog__notification")?.addEventListener("click", (e) => {
-            e.preventDefault();
+        document.getElementById("dialog__notification")?.addEventListener("click", () => {
             NotificationBuilder.prototype.destroyNotification(notification);
         })
     }
@@ -213,12 +214,11 @@ export default class Play {
     reset(btnReset, deck, cards, notification, computerHand, playerHand) {
 
         function proceedReset() {
-            NotificationBuilder.prototype.destroyNotification(notification);
             DeckComponentBuilder.prototype.destroyDeck(deck, cards, computerHand, playerHand)
         }
         btnReset?.addEventListener('click', () => {
+            NotificationBuilder.prototype.destroyNotification(notification);
             proceedReset();
-            this.closeDialog(notification);
         });
     }
 

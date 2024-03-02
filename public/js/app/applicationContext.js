@@ -82,7 +82,6 @@ export default class ApplicationContext {
         Play.prototype.deal(this.#btnDeal, this.#deck, this.#cards, this.#notification, this.#computerHand, this.#playerHand);
         Play.prototype.hit(this.#btnHit, this.#deck, this.#cards, this.#notification, this.#computerHand, this.#playerHand);
         Play.prototype.stand(this.#btnStand, this.#deck, this.#cards, this.#notification, this.#computerHand, this.#playerHand);
-        Play.prototype.closeDialog(this.#notification);
     }
 
     resetGame() {

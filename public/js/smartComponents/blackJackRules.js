@@ -34,8 +34,7 @@ export default class BlackJackRules {
         const filteredArray = hand.filter((val) => val.value !== "A");
         let tempSum = 0;
         for (let ele of filteredArray) {
-            let intVal = parseInt(ele.value.toString());
-            tempSum += intVal;
+            tempSum += parseInt(ele.value.toString());
         }
         return tempSum;
     }
@@ -47,6 +46,8 @@ export default class BlackJackRules {
      */
     aceRule(handSum) {
         if (handSum + 11 <= 21) {
+            return "11";
+        } else if (handSum == 10) {
             return "11";
         }
         return "1";
@@ -77,7 +78,7 @@ export default class BlackJackRules {
      * @returns {boolean}
      */
     looseByBlackJack(computerHandSum) {
-        return computerHandSum == 21;
+        return computerHandSum === 21;
     }
 
     /**
@@ -86,7 +87,7 @@ export default class BlackJackRules {
      * @returns {boolean}
      */
     winByBlackJack(playerHandSum) {
-        return playerHandSum == 21;
+        return playerHandSum === 21;
     }
 
     /**
