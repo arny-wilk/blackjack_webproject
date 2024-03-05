@@ -129,11 +129,13 @@ export default class Play {
                 if (BlackJackRules.prototype.tie(sumPlayer, sumComp)) {
                     console.log(`computer don't add a card and its a tie:`, sumPlayer, sumComp);
                     NotificationBuilder.prototype.buildTieNotification(notification).show();
+                    break;
                 }
 
                 if (BlackJackRules.prototype.loose(sumPlayer, sumComp)) {
                     console.log(`comp don't add a card and its a loose : `, sumPlayer + ' < ' + sumComp);
                     NotificationBuilder.prototype.buildLooseNotification(notification).show();
+                    break;
                 }
 
                 let card = cards.pop();

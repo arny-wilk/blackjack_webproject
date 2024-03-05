@@ -126,16 +126,17 @@ export default class BlackJackRules {
      */
     execRules(hand) {
 
-        hand.forEach(obj => {
-            obj.value
+        const tempHand =  hand;
+
+        tempHand.forEach(obj => { 
             obj.value = BlackJackRules.prototype.setLogsRules(obj)
             if (obj.value === "A") {
-                obj.value = BlackJackRules.prototype.aceRule(BlackJackRules.prototype.handWithoutAce(hand));
+                obj.value = BlackJackRules.prototype.aceRule(BlackJackRules.prototype.handWithoutAce(tempHand));
             }
         });
 
         const handArrayValue = [];
-        hand.forEach(obj => {
+        tempHand.forEach(obj => {
             handArrayValue.push(parseInt(obj.value.toString(), 10));
         })
 
