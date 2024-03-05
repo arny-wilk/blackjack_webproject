@@ -119,22 +119,22 @@ export default class Play {
 
         function proceedStand() {
 
-            let sumComp = BlackJackRules.prototype.execRules(computerHand);
-            let sumPlayer = BlackJackRules.prototype.execRules(playerHand);
-            console.log(`computerHandSum: `, sumComp);
-            console.log(`playerHandSum: `, sumPlayer);
-
-            if (BlackJackRules.prototype.tie(sumPlayer, sumComp)) {
-                console.log(`computer don't add a card and its a tie:`, sumPlayer, sumComp);
-                NotificationBuilder.prototype.buildTieNotification(notification).show();
-            }
-
-            if (BlackJackRules.prototype.loose(sumPlayer, sumComp)) {
-                console.log(`comp don't add a card and its a loose : `, sumPlayer + ' < ' + sumComp);
-                NotificationBuilder.prototype.buildLooseNotification(notification).show();
-            }
-
             while (true) {
+
+                let sumComp = BlackJackRules.prototype.execRules(computerHand);
+                let sumPlayer = BlackJackRules.prototype.execRules(playerHand);
+                console.log(`computerHandSum: `, sumComp);
+                console.log(`playerHandSum: `, sumPlayer);
+
+                if (BlackJackRules.prototype.tie(sumPlayer, sumComp)) {
+                    console.log(`computer don't add a card and its a tie:`, sumPlayer, sumComp);
+                    NotificationBuilder.prototype.buildTieNotification(notification).show();
+                }
+
+                if (BlackJackRules.prototype.loose(sumPlayer, sumComp)) {
+                    console.log(`comp don't add a card and its a loose : `, sumPlayer + ' < ' + sumComp);
+                    NotificationBuilder.prototype.buildLooseNotification(notification).show();
+                }
 
                 let card = cards.pop();
                 if (card !== undefined) {
