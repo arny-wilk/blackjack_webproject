@@ -6,6 +6,8 @@ import Hand from "../dumpComponents/hand.js";
 import Notification from "../dumpComponents/notification.js";
 import BlackJackRules from "../smartComponents/blackJackRules.js";
 import Deck from "../smartComponents/deck.js";
+import Utils from "../utilities/utils.js";
+import BoardComponentBuilder from "./componentBuilder/boardComponentBuilder.js";
 import DeckComponentBuilder from "./componentBuilder/deckComponentBuilder.js";
 import NotificationBuilder from "./componentBuilder/notificationBuilder.js";
 
@@ -39,7 +41,6 @@ export default class Play {
         deck.add(".btn__stand", ".btn__deal", "active_btn")
 
         function proceedDeal() {
-            NotificationBuilder.prototype.destroyNotification(notification);
             DeckComponentBuilder.prototype.buildDeckComponent(deck, cards, computerHand, playerHand)
             const computerHandSum = BlackJackRules.prototype.execRules(computerHand);
             const playerHandSum = BlackJackRules.prototype.execRules(playerHand);
@@ -53,6 +54,13 @@ export default class Play {
                 console.log(`its a blackjack you loose `, computerHandSum);
                 NotificationBuilder.prototype.buildBlackJackLooseNotification(notification).show();
             }
+
+            Utils.prototype.replaceText(/[0-9]/gm, ".computer_panel", "");
+            Utils.prototype.replaceText(/[0-9]/gm, ".player_panel", "");
+
+            Utils.prototype.addText(".computer_panel", computerHandSum);
+            Utils.prototype.addText(".player_panel", playerHandSum);
+
         }
         btnDeal?.addEventListener('click', () => {
             NotificationBuilder.prototype.destroyNotification(notification);
@@ -74,7 +82,6 @@ export default class Play {
     hit(btnHit, deck, cards, notification, computerHand, playerHand) {
 
         function proceedhit() {
-
             let card = cards.pop();
             if (card !== undefined) {
                 playerHand.push(card);
@@ -87,6 +94,9 @@ export default class Play {
 
             // const computerHandSum = BlackJackRules.prototype.execRules(computerHand);
             const playerHandSum = BlackJackRules.prototype.execRules(playerHand);
+
+            Utils.prototype.replaceText(/[0-9]/gm, ".player_panel", "");
+            Utils.prototype.addText(".player_panel", playerHandSum);
 
             if (BlackJackRules.prototype.looseByJump(playerHandSum)) {
                 console.log(`You jumped its a loose :`, playerHandSum);
@@ -118,22 +128,20 @@ export default class Play {
     stand(btnStand, deck, cards, notification, computerHand, playerHand) {
 
         function proceedStand() {
-
             while (true) {
+                let computerHandSum = BlackJackRules.prototype.execRules(computerHand);
+                let playerHandSum = BlackJackRules.prototype.execRules(playerHand);
+                console.log(`computerHandSum: `, computerHandSum);
+                console.log(`playerHandSum: `, playerHandSum);
 
-                let sumComp = BlackJackRules.prototype.execRules(computerHand);
-                let sumPlayer = BlackJackRules.prototype.execRules(playerHand);
-                console.log(`computerHandSum: `, sumComp);
-                console.log(`playerHandSum: `, sumPlayer);
-
-                if (BlackJackRules.prototype.tie(sumPlayer, sumComp)) {
-                    console.log(`computer don't add a card and its a tie:`, sumPlayer, sumComp);
+                if (BlackJackRules.prototype.tie(playerHandSum, computerHandSum)) {
+                    console.log(`computer don't add a card and its a tie:`, playerHandSum, computerHandSum);
                     NotificationBuilder.prototype.buildTieNotification(notification).show();
                     break;
                 }
 
-                if (BlackJackRules.prototype.loose(sumPlayer, sumComp)) {
-                    console.log(`comp don't add a card and its a loose : `, sumPlayer + ' < ' + sumComp);
+                if (BlackJackRules.prototype.loose(playerHandSum, computerHandSum)) {
+                    console.log(`comp don't add a card and its a loose : `, playerHandSum + ' < ' + computerHandSum);
                     NotificationBuilder.prototype.buildLooseNotification(notification).show();
                     break;
                 }
@@ -148,36 +156,44 @@ export default class Play {
                 deck.createComponent("span", `${suit}`, li, [{}])
                 deck.createComponent("span", `${suit} ${value}`, li, [{}])
 
-                sumComp = BlackJackRules.prototype.execRules(computerHand);
-                sumPlayer = BlackJackRules.prototype.execRules(playerHand);
+                computerHandSum = BlackJackRules.prototype.execRules(computerHand);
+                playerHandSum = BlackJackRules.prototype.execRules(playerHand);
 
-                console.log(`computerHandSum: `, sumComp);
-                console.log(`playerHandSum: `, sumPlayer);
+                Utils.prototype.replaceText(/[0-9]/gm, ".computer_panel", "");
+                Utils.prototype.replaceText(/[0-9]/gm, ".player_panel", "");
 
-                if (BlackJackRules.prototype.looseByBlackJack(sumComp)) {
-                    console.log(`BlackJack, its a loose`, sumComp);
+                Utils.prototype.addText(".computer_panel", computerHandSum);
+                Utils.prototype.addText(".player_panel", playerHandSum);
+
+
+                console.log(`computerHandSum: `, computerHandSum);
+                console.log(`playerHandSum: `, playerHandSum);
+
+                if (BlackJackRules.prototype.looseByBlackJack(computerHandSum)) {
+                    console.log(`BlackJack, its a loose`, computerHandSum);
                     NotificationBuilder.prototype.buildBlackJackLooseNotification(notification).show();
                     break;
                 }
 
-                if (BlackJackRules.prototype.winByComputerJump(sumComp)) {
-                    console.log(`computer Jumped its a win`, sumComp);
+                if (BlackJackRules.prototype.winByComputerJump(computerHandSum)) {
+                    console.log(`computer Jumped its a win`, computerHandSum);
                     NotificationBuilder.prototype.buildWinNotification(notification).show();
                     break;
                 }
 
-                if (BlackJackRules.prototype.tie(sumPlayer, sumComp)) {
-                    console.log(`its a tie:`, sumPlayer, ' = ', sumComp);
+                if (BlackJackRules.prototype.tie(playerHandSum, computerHandSum)) {
+                    console.log(`its a tie:`, playerHandSum, ' = ', computerHandSum);
                     NotificationBuilder.prototype.buildTieNotification(notification).show();
                     break;
                 }
 
-                if (!BlackJackRules.prototype.winByComputerJump(sumComp) && BlackJackRules.prototype.loose(sumPlayer, sumComp)) {
-                    console.log(`its a loose`, sumPlayer + ' < ' + sumComp);
+                if (!BlackJackRules.prototype.winByComputerJump(computerHandSum) && BlackJackRules.prototype.loose(playerHandSum, computerHandSum)) {
+                    console.log(`its a loose`, playerHandSum + ' < ' + computerHandSum);
                     NotificationBuilder.prototype.buildLooseNotification(notification).show();
                     break;
                 }
             }
+
         }
         btnStand?.addEventListener('click', () => {
             NotificationBuilder.prototype.destroyNotification(notification);

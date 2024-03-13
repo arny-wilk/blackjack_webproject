@@ -64,6 +64,7 @@ export default class Dom {
     });
   }
 
+
   /**
    *
    * @param {string } selector
@@ -84,7 +85,7 @@ export default class Dom {
    *
    * @param {string} selector
    */
-  destroyAllComponent(selector) {
+  destroyAllComponents(selector) {
     document.querySelectorAll(selector)?.forEach(node => node.remove);
   }
 }
