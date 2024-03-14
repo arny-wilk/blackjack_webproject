@@ -12,10 +12,10 @@ export default class BoardComponentBuilder {
     buildBoardComponent() {
         const board = new Board();
 
-        board.createComponent("h2", "computer hand", document.querySelector(".deck__container"), [{ "name": "class", "value": "computer_panel" }]);
+        board.createComponent("h2", "computer hand ", document.querySelector(".deck__container"), [{ "name": "class", "value": "computer_panel" }]);
         board.createComponent("ul", null, document.querySelector(".deck__container"), [{ "name": "class", "value": "computer__deck deck" }]);
-
-        board.createComponent("h2", "player hand", document.querySelector(".deck__container"), [{ "name": "class", "value": "player_panel" }]);
+        
+        board.createComponent("h2", "player hand ", document.querySelector(".deck__container"), [{ "name": "class", "value": "player_panel" }]);
         board.createComponent("ul", null, document.querySelector(".deck__container"), [{ "name": "class", "value": "player__deck deck" }]);
 
         board.createComponent("button", "Deal", document.querySelector(".board__panel"), [{ "name": "type", "value": "button" }, { "name": "class", "value": "btn__board btn__deal" }]);
@@ -27,5 +27,6 @@ export default class BoardComponentBuilder {
 
         return board;
     }
+
 
 }

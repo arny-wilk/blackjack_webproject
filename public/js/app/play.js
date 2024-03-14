@@ -6,6 +6,8 @@ import Hand from "../dumpComponents/hand.js";
 import Notification from "../dumpComponents/notification.js";
 import BlackJackRules from "../smartComponents/blackJackRules.js";
 import Deck from "../smartComponents/deck.js";
+import Dom from "../utilities/dom.js";
+import StateContainer from "../utilities/stateContainer.js";
 import Utils from "../utilities/utils.js";
 import BoardComponentBuilder from "./componentBuilder/boardComponentBuilder.js";
 import DeckComponentBuilder from "./componentBuilder/deckComponentBuilder.js";
@@ -55,11 +57,9 @@ export default class Play {
                 NotificationBuilder.prototype.buildBlackJackLooseNotification(notification).show();
             }
 
-            Utils.prototype.replaceText(/[0-9]/gm, ".computer_panel", "");
-            Utils.prototype.replaceText(/[0-9]/gm, ".player_panel", "");
-
-            Utils.prototype.addText(".computer_panel", computerHandSum);
-            Utils.prototype.addText(".player_panel", playerHandSum);
+            Board.prototype.destroyComponent(".computer__handsum_show");
+            Board.prototype.destroyComponent(".player__handsum_show");
+            Board.prototype.createComponent("span", ` ${playerHandSum}`, document.querySelector(".player_panel"), [{ "name": "class", "value": "player__handsum_show" }]);
 
         }
         btnDeal?.addEventListener('click', () => {
@@ -92,11 +92,9 @@ export default class Play {
             deck.createComponent("span", `${suit}`, li, [{}])
             deck.createComponent("span", `${suit} ${value}`, li, [{}])
 
-            // const computerHandSum = BlackJackRules.prototype.execRules(computerHand);
             const playerHandSum = BlackJackRules.prototype.execRules(playerHand);
 
-            Utils.prototype.replaceText(/[0-9]/gm, ".player_panel", "");
-            Utils.prototype.addText(".player_panel", playerHandSum);
+            Board.prototype.updateComponent(".player__handsum_show", playerHandSum);
 
             if (BlackJackRules.prototype.looseByJump(playerHandSum)) {
                 console.log(`You jumped its a loose :`, playerHandSum);
@@ -159,12 +157,9 @@ export default class Play {
                 computerHandSum = BlackJackRules.prototype.execRules(computerHand);
                 playerHandSum = BlackJackRules.prototype.execRules(playerHand);
 
-                Utils.prototype.replaceText(/[0-9]/gm, ".computer_panel", "");
-                Utils.prototype.replaceText(/[0-9]/gm, ".player_panel", "");
-
-                Utils.prototype.addText(".computer_panel", computerHandSum);
-                Utils.prototype.addText(".player_panel", playerHandSum);
-
+                Board.prototype.destroyComponent(".computer__handsum_show");
+                Board.prototype.createComponent("span", ` ${computerHandSum}`, document.querySelector(".computer_panel"), [{ "name": "class", "value": "computer__handsum_show" }]);
+                Board.prototype.updateComponent(".player__handsum_show", playerHandSum);
 
                 console.log(`computerHandSum: `, computerHandSum);
                 console.log(`playerHandSum: `, playerHandSum);

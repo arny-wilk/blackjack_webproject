@@ -23,7 +23,7 @@ export default class StateContainer {
      * @returns {Object}
      */
     getState(prop) {
-        return Object.assign({}, this.#state[prop])
+        return Object.assign({prop: this.#state[prop]}, this.#state[prop])
     }
 
     /**
@@ -37,6 +37,11 @@ export default class StateContainer {
         return this.#_setState(prop, newState);
     }
 
+    /**
+     *
+     * @param {PropertyKey} prop
+     * @param {Object} newState
+     */
     #_setState(prop, newState) {
         this.#state = { ... this.#state, [prop]: newState }
     }

@@ -64,6 +64,14 @@ export default class Dom {
     });
   }
 
+  /**
+   *
+   * @param {*} selector
+   * @param {*} newText
+   */
+  updateComponent(selector, newText) {
+    document.querySelector(selector).textContent = newText;
+  }
 
   /**
    *
