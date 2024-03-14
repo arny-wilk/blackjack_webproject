@@ -66,6 +66,15 @@ export default class Dom {
 
   /**
    *
+   * @param {*} selector
+   * @param {*} newText
+   */
+  updateComponent(selector, newText) {
+    document.querySelector(selector).textContent = newText;
+  }
+
+  /**
+   *
    * @param {string } selector
    */
   destroyComponent(selector) {
@@ -84,7 +93,7 @@ export default class Dom {
    *
    * @param {string} selector
    */
-  destroyAllComponent(selector) {
+  destroyAllComponents(selector) {
     document.querySelectorAll(selector)?.forEach(node => node.remove);
   }
 }
