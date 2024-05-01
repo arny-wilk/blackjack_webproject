@@ -6,10 +6,6 @@ import Hand from "../dumpComponents/hand.js";
 import Notification from "../dumpComponents/notification.js";
 import BlackJackRules from "../smartComponents/blackJackRules.js";
 import Deck from "../smartComponents/deck.js";
-import Dom from "../utilities/dom.js";
-import StateContainer from "../utilities/stateContainer.js";
-import Utils from "../utilities/utils.js";
-import BoardComponentBuilder from "./componentBuilder/boardComponentBuilder.js";
 import DeckComponentBuilder from "./componentBuilder/deckComponentBuilder.js";
 import NotificationBuilder from "./componentBuilder/notificationBuilder.js";
 
@@ -48,12 +44,10 @@ export default class Play {
             const playerHandSum = BlackJackRules.prototype.execRules(playerHand);
 
             if (BlackJackRules.prototype.winByBlackJack(playerHandSum)) {
-                console.log(`its a blackjack you won`, playerHandSum);
                 NotificationBuilder.prototype.buildBlackJackWinNotification(notification).show();
             }
 
             if (BlackJackRules.prototype.looseByBlackJack(computerHandSum)) {
-                console.log(`its a blackjack you loose `, computerHandSum);
                 NotificationBuilder.prototype.buildBlackJackLooseNotification(notification).show();
             }
 
@@ -66,6 +60,7 @@ export default class Play {
             NotificationBuilder.prototype.destroyNotification(notification);
             DeckComponentBuilder.prototype.destroyDeck(deck, cards, computerHand, playerHand);
             proceedDeal();
+            console.log(`cards :`, cards);
             this.closeDialog(notification);
         });
     };
@@ -76,10 +71,9 @@ export default class Play {
      * @param {Deck} deck
      * @param {Card[]} cards
      * @param {Notification} notification
-     * @param {Hand[]} computerHand
      * @param {Hand[]} playerHand
      */
-    hit(btnHit, deck, cards, notification, computerHand, playerHand) {
+    hit(btnHit, deck, cards, notification, playerHand) {
 
         function proceedhit() {
             let card = cards.pop();
@@ -97,19 +91,19 @@ export default class Play {
             Board.prototype.updateComponent(".player__handsum_show", playerHandSum);
 
             if (BlackJackRules.prototype.looseByJump(playerHandSum)) {
-                console.log(`You jumped its a loose :`, playerHandSum);
                 NotificationBuilder.prototype.buildLooseNotification(notification).show();
             }
 
             if (BlackJackRules.prototype.winByBlackJack(playerHandSum)) {
-                console.log(`BlackJack its a win :`, playerHandSum);
                 NotificationBuilder.prototype.buildBlackJackWinNotification(notification).show();
             }
+
         }
 
         btnHit?.addEventListener('click', () => {
             NotificationBuilder.prototype.destroyNotification(notification);
             proceedhit();
+            console.log(`cards :`, cards);
             this.closeDialog(notification);
         });
     }
@@ -129,17 +123,13 @@ export default class Play {
             while (true) {
                 let computerHandSum = BlackJackRules.prototype.execRules(computerHand);
                 let playerHandSum = BlackJackRules.prototype.execRules(playerHand);
-                console.log(`computerHandSum: `, computerHandSum);
-                console.log(`playerHandSum: `, playerHandSum);
 
                 if (BlackJackRules.prototype.tie(playerHandSum, computerHandSum)) {
-                    console.log(`computer don't add a card and its a tie:`, playerHandSum, computerHandSum);
                     NotificationBuilder.prototype.buildTieNotification(notification).show();
                     break;
                 }
 
                 if (BlackJackRules.prototype.loose(playerHandSum, computerHandSum)) {
-                    console.log(`comp don't add a card and its a loose : `, playerHandSum + ' < ' + computerHandSum);
                     NotificationBuilder.prototype.buildLooseNotification(notification).show();
                     break;
                 }
@@ -161,29 +151,22 @@ export default class Play {
                 Board.prototype.createComponent("span", ` ${computerHandSum}`, document.querySelector(".computer_panel"), [{ "name": "class", "value": "computer__handsum_show" }]);
                 Board.prototype.updateComponent(".player__handsum_show", playerHandSum);
 
-                console.log(`computerHandSum: `, computerHandSum);
-                console.log(`playerHandSum: `, playerHandSum);
-
                 if (BlackJackRules.prototype.looseByBlackJack(computerHandSum)) {
-                    console.log(`BlackJack, its a loose`, computerHandSum);
                     NotificationBuilder.prototype.buildBlackJackLooseNotification(notification).show();
                     break;
                 }
 
                 if (BlackJackRules.prototype.winByComputerJump(computerHandSum)) {
-                    console.log(`computer Jumped its a win`, computerHandSum);
                     NotificationBuilder.prototype.buildWinNotification(notification).show();
                     break;
                 }
 
                 if (BlackJackRules.prototype.tie(playerHandSum, computerHandSum)) {
-                    console.log(`its a tie:`, playerHandSum, ' = ', computerHandSum);
                     NotificationBuilder.prototype.buildTieNotification(notification).show();
                     break;
                 }
 
                 if (!BlackJackRules.prototype.winByComputerJump(computerHandSum) && BlackJackRules.prototype.loose(playerHandSum, computerHandSum)) {
-                    console.log(`its a loose`, playerHandSum + ' < ' + computerHandSum);
                     NotificationBuilder.prototype.buildLooseNotification(notification).show();
                     break;
                 }
@@ -193,6 +176,7 @@ export default class Play {
         btnStand?.addEventListener('click', () => {
             NotificationBuilder.prototype.destroyNotification(notification);
             proceedStand();
+            console.log(`cards :`, cards);
             this.closeDialog(notification);
         });
     }
@@ -225,13 +209,9 @@ export default class Play {
      * @param {Hand[]} playerHand
      */
     reset(btnReset, deck, cards, notification, computerHand, playerHand) {
-
-        function proceedReset() {
-            DeckComponentBuilder.prototype.destroyDeck(deck, cards, computerHand, playerHand)
-        }
         btnReset?.addEventListener('click', () => {
             NotificationBuilder.prototype.destroyNotification(notification);
-            proceedReset();
+            DeckComponentBuilder.prototype.destroyDeck(deck, cards, computerHand, playerHand)
         });
     }
 

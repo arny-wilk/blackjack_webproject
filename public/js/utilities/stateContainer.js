@@ -26,9 +26,12 @@ export default class StateContainer {
         return Object.assign({prop: this.#state[prop]}, this.#state[prop])
     }
 
+    
     /**
+     *
      * @param {PropertyKey} prop
-     * @param {Object} newState
+     * @param {*} newState
+     * @returns {(void | ((newState: any) => void))}
      */
     setState(prop, newState) {
         if (!newState) {

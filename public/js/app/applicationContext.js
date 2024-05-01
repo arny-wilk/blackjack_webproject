@@ -25,7 +25,6 @@ export default class ApplicationContext {
      */
     #notification
 
-
     /**
      *
      * @type {Deck} deck
@@ -80,7 +79,7 @@ export default class ApplicationContext {
 
     startGame() {
         Play.prototype.deal(this.#btnDeal, this.#deck, this.#cards, this.#notification, this.#computerHand, this.#playerHand);
-        Play.prototype.hit(this.#btnHit, this.#deck, this.#cards, this.#notification, this.#computerHand, this.#playerHand);
+        Play.prototype.hit(this.#btnHit, this.#deck, this.#cards, this.#notification, this.#playerHand);
         Play.prototype.stand(this.#btnStand, this.#deck, this.#cards, this.#notification, this.#computerHand, this.#playerHand);
     }
 

@@ -48,9 +48,6 @@ export default class DeckComponentBuilder {
             playerHand.push(cardPlayerSecond);
         }
 
-        console.log(`Hand computer: `, computerHand);
-        console.log(`hand Player: `, playerHand);
-
         for (let computerCard of computerHand) {
             const { suit, value } = computerCard;
             let li = deck.createComponent("li", null, document.querySelector(".computer__deck"), [{ "name": "class", "value": "computer__card_slot card_slot" }]);

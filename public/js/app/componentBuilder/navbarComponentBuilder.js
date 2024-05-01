@@ -32,12 +32,13 @@ export default class NavBarComponentBuilder {
       "value": "liste-nav",
     }]);
 
+
     const first_li = navBar.createComponent("li", null, ul, [{
       "name": "class",
       "value": "item-nav",
     }]);
 
-    navBar.createComponent("a", "Règle du jeu", first_li, [{
+    navBar.createComponent("a", "Règle du BlackJack", first_li, [{
       "name": "href",
       "value": "#",
     }, { "name": "class", "value": "link__to_show_rules" }]);
@@ -47,17 +48,7 @@ export default class NavBarComponentBuilder {
       "value": "item-nav",
     }]);
 
-    navBar.createComponent("a", "Commencer une Partie", second_li, [{
-      "name": "href",
-      "value": "#",
-    }, { "name": "class", "value": "link__to_show_game" }]);
-
-    const third_li = navBar.createComponent("li", null, ul, [{
-      "name": "class",
-      "value": "item-nav",
-    }]);
-
-    navBar.createComponent("a", "Classement", third_li, [{
+    navBar.createComponent("a", "Classement", second_li, [{
       "name": "href",
       "value": "#",
     }, { "name": "class", "value": "lin__to_show_classement" }]);
