@@ -214,5 +214,4 @@ export default class Play {
             DeckComponentBuilder.prototype.destroyDeck(deck, cards, computerHand, playerHand)
         });
     }
-
 }
